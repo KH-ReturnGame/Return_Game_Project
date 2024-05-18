@@ -2,31 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity
+public class Entity: MonoBehaviour
 {
-    private float Max_Hp;
-    private float Current_Hp;
+    private float _maxHp;
+    private float _currentHp;
 
-    void RecoveryHp(float Hp)
+    void RecoveryHp(float hp)
     {
-        if (Current_Hp + Hp > Max_Hp)
+        if (_currentHp + hp > _maxHp)
         {
             Debug.Log("cant recovery");
-            Current_Hp = Max_Hp;
+            _currentHp = _maxHp;
         }
         else
         {
-            Current_Hp += Hp;
+            _currentHp += hp;
         }
     }
 
-    void TakeDamage(float Hp)
+    void TakeDamage(float hp)
     {
-        if (Current_Hp - Hp < 0)
+        if (_currentHp - hp <= 0)
         {
             Debug.Log("gg");
-            Current_Hp = 0;
+            _currentHp = 0;
         }
-        Current_Hp -= Hp;
+        _currentHp -= hp;
     }
 }
