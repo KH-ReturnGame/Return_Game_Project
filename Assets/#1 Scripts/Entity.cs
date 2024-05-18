@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity: MonoBehaviour
+public class Entity : MonoBehaviour
 {
     private float _maxHp;
     private float _currentHp;
