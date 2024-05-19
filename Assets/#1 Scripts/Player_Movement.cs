@@ -2,35 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어 움직임 담당 클래스
+/// </summary>
+/// <returns></returns>
 public class Player_Movement : MonoBehaviour
 {
-    private Rigidbody2D player_rigidbody;
-    private float movementInputDirection;
-    private float movementSpeed = 10.00f;
-    // Start is called before the first frame update
+    private Rigidbody2D _playerRigidbody;
+    private float _movementInputDirection;
+    private float _movementSpeed = 10.00f;
+    
+    //제일 처음 호출
     void Start()
     {
-        player_rigidbody = GetComponent<Rigidbody2D>();
+        _playerRigidbody = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
+    
+    //매 프레임 실행
     void Update()
     {
+        //입력 체크하기
         CheckInput();
     }
 
+    //0.02초마다 실행
     private void FixedUpdate()
     {
+        //움직임 적용
         ApplyMovement();
     }
 
     private void CheckInput()
     {
-        movementInputDirection = Input.GetAxisRaw("Horizontal");
+        _movementInputDirection = Input.GetAxisRaw("Horizontal");
     }
 
     private void ApplyMovement()
     {
-        player_rigidbody.velocity = new Vector2(movementInputDirection * movementSpeed, player_rigidbody.velocity.y);
+        _playerRigidbody.velocity = new Vector2(_movementInputDirection * _movementSpeed, _playerRigidbody.velocity.y);
     }
 }
