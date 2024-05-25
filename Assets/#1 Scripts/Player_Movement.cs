@@ -32,7 +32,7 @@ public class Player_Movement : MonoBehaviour
         //테스트용 나중에 지우셈
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            _player.AddState(_player._states[0],ref _player._currentState,_player);
+            _player.AddState(_player._states[0]);
         }
     }
 

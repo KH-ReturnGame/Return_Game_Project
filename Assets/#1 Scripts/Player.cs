@@ -54,9 +54,23 @@ public class Player : Entity
 
     public void Update()
     {
-        for (int i = 0; i < _currentState.Count; i++)
+        if (_currentState != null)
         {
-            _currentState[i].Execute(this);
+            for (int i = 0; i < _currentState.Count; i++)
+            {
+                _currentState[i].Execute(this);
+            }
         }
+    }
+    
+    public void AddState(State newState)
+    {
+        _currentState.Add(newState);
+        _currentState[_currentState.IndexOf(newState)].Enter(this);
+    }
+    public void RemoveState(State remState)
+    {
+        _currentState.Remove(remState);
+        _currentState[_currentState.IndexOf(remState)].Exit(this);
     }
 }
