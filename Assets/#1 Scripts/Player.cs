@@ -26,11 +26,9 @@ public enum PlayerStates
 public class Player : Entity
 {
     //플레이어가 가질 수 있는 모든 상태들
-    private State[] states;
+    public State[] _states;
     //"현재" 플레이어가 가지고 있는 모든 상태
-    private State[] currentState;
-    
-    
+    public List<State> _currentState;
     
     /// <summary>
     /// Player 클래스의 생성자임, 최대 체력,
@@ -39,4 +37,26 @@ public class Player : Entity
     /// Null
     /// </returns>
     public Player(float hp,GameObject playerPrefab) : base(hp,playerPrefab){}
+
+    public void Awake()
+    {
+        _states = new State[9];
+        _states[(int)PlayerStates.IsGround] = new PlayerOwnedStates.IsGround();
+        _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
+        _states[(int)PlayerStates.IsJump] = new PlayerOwnedStates.IsJump();
+        _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall();
+        _states[(int)PlayerStates.IsDash] = new PlayerOwnedStates.IsDash();
+        _states[(int)PlayerStates.IsMove] = new PlayerOwnedStates.IsMove();
+        _states[(int)PlayerStates.IsStun] = new PlayerOwnedStates.IsStun();
+        _states[(int)PlayerStates.IsAttacked] = new PlayerOwnedStates.IsAttacked();
+        _states[(int)PlayerStates.IsAttacking] = new PlayerOwnedStates.IsAttacking();
+    }
+
+    public void Update()
+    {
+        for (int i = 0; i < _currentState.Count; i++)
+        {
+            _currentState[i].Execute(this);
+        }
+    }
 }

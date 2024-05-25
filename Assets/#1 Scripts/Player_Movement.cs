@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayerOwnedStates;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 /// <summary>
@@ -11,11 +13,13 @@ public class Player_Movement : MonoBehaviour
     private Rigidbody2D _playerRigidbody;
     private float _movementInputDirection;
     private float _movementSpeed = 10.00f;
+    private Player _player;
     
     //제일 처음 호출
     void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();
+        _player = GetComponent<Player>();
     }
     
     //매 프레임 실행
@@ -23,6 +27,13 @@ public class Player_Movement : MonoBehaviour
     {
         //입력 체크하기
         CheckInput();
+        
+        
+        //테스트용 나중에 지우셈
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _player.AddState(_player._states[0],ref _player._currentState,_player);
+        }
     }
 
     //0.02초마다 실행

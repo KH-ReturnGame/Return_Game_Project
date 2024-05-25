@@ -29,7 +29,7 @@ public class Entity : MonoBehaviour
         //생명체를 생성
         Instantiate(createObj);
         
-        Debug.Log(_maxHp);
+        Debug.Log("maxHp : "+_maxHp);
     }
 
     /// <summary>
@@ -67,5 +67,16 @@ public class Entity : MonoBehaviour
             _currentHp = 0;
         }
         _currentHp -= hp;
+    }
+    
+    public void AddState(State newState, ref List<State> currentState, Player player)
+    {
+        currentState.Add(newState);
+        currentState[currentState.IndexOf(newState)].Enter(player);
+    }
+    public void RemoveState(State remState, ref List<State> currentState, Player player)
+    {
+        currentState.Remove(remState);
+        currentState[currentState.IndexOf(remState)].Exit(player);
     }
 }
