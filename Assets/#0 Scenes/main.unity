@@ -855,10 +855,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1408647616}
   - component: {fileID: 1408647615}
-  - component: {fileID: 1408647617}
   - component: {fileID: 1408647620}
   - component: {fileID: 1408647621}
   - component: {fileID: 1408647618}
+  - component: {fileID: 1408647617}
   m_Layer: 0
   m_Name: player_test
   m_TagString: Untagged
@@ -985,7 +985,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1408647621
 BoxCollider2D:
   m_ObjectHideFlags: 0
