@@ -89,6 +89,7 @@ public class Player : Entity
     }
     public void RemoveState(State remState)
     {
+        if(!_currentState.Contains(remState)) return;
         _currentState[_currentState.IndexOf(remState)].Exit(this);
         _currentState.Remove(remState);
     }
