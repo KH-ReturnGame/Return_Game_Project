@@ -2,167 +2,167 @@ using UnityEngine;
 
 namespace EnemyOwnedStates
 {
-    public class IsGround : State
+    public class IsGround : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
+        {
+            Debug.Log("isground enter");
+        }
+        public override void Execute(Enemy entity)
+        {
+            Debug.Log("isground Execute");
+        }
+        public override void Exit(Enemy entity)
+        {
+            Debug.Log("isground Exit");
+        }
+    }
+    public class IsAir : State<Enemy>
+    {
+        public override void Enter(Enemy entity)
+        {
+            Debug.Log("IsAir enter");
+        }
+        public override void Execute(Enemy entity)
+        {
+            Debug.Log("IsAir Execute");
+        }
+        public override void Exit(Enemy entity)
+        {
+            Debug.Log("IsAir Exit");
+        }
+    }
+    public class IsJump : State<Enemy>
+    {
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsAir : State
+    public class IsWall : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsJump : State
+    public class IsMove : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsWall : State
+    public class IsStun : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsMove : State
+    public class IsAttacked : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsStun : State
+    public class IsAttacking : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsAttacked : State
+    public class IsDetect : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsAttacking : State
+    public class IsDie : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }
     }
-    public class IsDetect : State
+    public class IsCool : State<Enemy>
     {
-        public override void Enter(Player entity)
+        public override void Enter(Enemy entity)
         {
             
         }
-        public override void Execute(Player entity)
+        public override void Execute(Enemy entity)
         {
             
         }
-        public override void Exit(Player entity)
-        {
-            
-        }
-    }
-    public class IsDie : State
-    {
-        public override void Enter(Player entity)
-        {
-            
-        }
-        public override void Execute(Player entity)
-        {
-            
-        }
-        public override void Exit(Player entity)
-        {
-            
-        }
-    }
-    public class IsCool : State
-    {
-        public override void Enter(Player entity)
-        {
-            
-        }
-        public override void Execute(Player entity)
-        {
-            
-        }
-        public override void Exit(Player entity)
+        public override void Exit(Enemy entity)
         {
             
         }

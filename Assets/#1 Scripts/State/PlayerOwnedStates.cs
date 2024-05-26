@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PlayerOwnedStates
 {
-    public class IsGround : State
+    public class IsGround : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -17,7 +17,7 @@ namespace PlayerOwnedStates
             Debug.Log("isground exit");
         }
     }
-    public class IsAir : State
+    public class IsAir : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -32,7 +32,7 @@ namespace PlayerOwnedStates
             Debug.Log("IsAir exit");
         }
     }
-    public class IsJump : State
+    public class IsJump : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -47,7 +47,7 @@ namespace PlayerOwnedStates
             
         }
     }
-    public class IsWall : State
+    public class IsWall : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -62,7 +62,7 @@ namespace PlayerOwnedStates
             
         }
     }
-    public class IsDash : State
+    public class IsDash : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -77,7 +77,7 @@ namespace PlayerOwnedStates
             
         }
     }
-    public class IsMove : State
+    public class IsMove : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -92,7 +92,7 @@ namespace PlayerOwnedStates
             
         }
     }
-    public class IsStun : State
+    public class IsStun : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -107,7 +107,7 @@ namespace PlayerOwnedStates
             
         }
     }
-    public class IsAttacked : State
+    public class IsAttacked : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -122,7 +122,7 @@ namespace PlayerOwnedStates
             
         }
     }
-    public class IsAttacking : State
+    public class IsAttacking : State<Player>
     {
         public override void Enter(Player entity)
         {

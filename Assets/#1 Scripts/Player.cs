@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
+//플레이어가 가질 수 있는 모든 상태 종류
 public enum PlayerStates
 {
     //
@@ -26,14 +26,14 @@ public enum PlayerStates
 /// <returns></returns>
 public class Player : Entity
 {
+    //플레이어가 가질 수 있는 모든 상태 개수
     public static int state_count = 9;
-    //플레이어가 가질 수 있는 모든 상태들
-    public State[] _states;
-    //"현재" 플레이어가 가지고 있는 모든 상태
-    public List<State> _currentState = new List<State>(state_count);
+    //플레이어가 가질 수 있는 모든 상태들 배열
+    public State<Player>[] _states;
+    private StateManager<Player> _stateManager;
 
     /// <summary>
-    /// Player 클래스의 생성자임, 최대 체력,
+    /// Player 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
     /// </summary>
     /// <returns>
     /// Null
@@ -42,7 +42,8 @@ public class Player : Entity
     {
         base.Setup(maxHp);
         
-        _states = new State[state_count];
+        //_states 초기화
+        _states = new State<Player>[state_count];
         _states[(int)PlayerStates.IsGround] = new PlayerOwnedStates.IsGround();
         _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
         _states[(int)PlayerStates.IsJump] = new PlayerOwnedStates.IsJump();
@@ -52,18 +53,18 @@ public class Player : Entity
         _states[(int)PlayerStates.IsStun] = new PlayerOwnedStates.IsStun();
         _states[(int)PlayerStates.IsAttacked] = new PlayerOwnedStates.IsAttacked();
         _states[(int)PlayerStates.IsAttacking] = new PlayerOwnedStates.IsAttacking();
+
+        _stateManager = new StateManager<Player>();
+        _stateManager.Setup(this,state_count,_states);
     }
 
+    //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
     public override void Updated()
     {
-        for (int i = 0; i < state_count; i++)
-        {
-            if (_currentState.Contains(_states[i]))
-            {
-                _currentState[_currentState.IndexOf(_states[i])].Execute(this);
-            }
-        }
+        //상태 매니저의 Execute실행
+        _stateManager.Execute();
 
+        //상태 추가 제거 테스트용
         if (Input.GetKeyDown(KeyCode.Q))
         {
             AddState(_states[0]);
@@ -82,15 +83,15 @@ public class Player : Entity
         }
     }
 
-    public void AddState(State newState)
+    //상태 추가 메소드
+    public void AddState(State<Player> newState)
     {
-        _currentState.Add(newState);
-        _currentState[_currentState.IndexOf(newState)].Enter(this);
+        _stateManager.AddState(newState);
     }
-    public void RemoveState(State remState)
+    
+    //상태 제거 메소드
+    public void RemoveState(State<Player> remState)
     {
-        if(!_currentState.Contains(remState)) return;
-        _currentState[_currentState.IndexOf(remState)].Exit(this);
-        _currentState.Remove(remState);
+        _stateManager.RemoveState(remState);
     }
 }

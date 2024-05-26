@@ -16,7 +16,7 @@ public abstract class Entity : MonoBehaviour
     private float _currentHp;
 
     /// <summary>
-    /// Entity 클래스의 생성자임, 매개변수로 최대체력과 생성할 생명체의 Prefab를 받음
+    /// Entity 클래스 기초 설정을 위한 Setup메소드, 매개변수로 최대체력을 받음
     /// </summary>
     /// <returns>
     /// Null
@@ -26,10 +26,10 @@ public abstract class Entity : MonoBehaviour
         //매개변수로 받은 값들을 지정해주기
         _maxHp = maxHp;
         _currentHp = maxHp;
-        
         Debug.Log("maxHp : "+_maxHp);
     }
 
+    //추상클래스인 updated메소드
     public abstract void Updated();
 
     /// <summary>

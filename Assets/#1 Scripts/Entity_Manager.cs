@@ -11,6 +11,8 @@ public class Entity_Manager : MonoBehaviour
 {
     //플레이어 인스턴스
     private Player _player;
+
+    private Enemy testEnemy;
     
     //플레이어 Prefab
     [SerializeField]
@@ -23,10 +25,15 @@ public class Entity_Manager : MonoBehaviour
         GameObject clone = Instantiate(playerPrefab);
         _player = clone.GetComponent<Player>();
         _player.Setup(100f);
+        
+        //테스트 에너미 생성
+        testEnemy = new Enemy();
+        testEnemy.Setup(100f);
     }
 
     private void Update()
     {
         _player.Updated();
+        testEnemy.Updated();
     }
 }

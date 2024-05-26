@@ -25,33 +25,75 @@ public enum EnemyStates
 
 public class Enemy : Entity
 {
+    //에너미가 가질 수 있는 모든 상태 개수
+    public static int state_count = 12;
     //에너미가 가질 수 있는 모든 상태들
-    private State[] states;
-    //"현재" 에너미가 가지고 있는 모든 상태
-    private State[] currentState;
+    private State<Enemy>[] _states;
+    private StateManager<Enemy> _stateManager;
 
+    /// <summary>
+    /// Enemy 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
+    /// </summary>
+    /// <returns>
+    /// Null
+    /// </returns>
     public override void Setup(float maxHp)
     {
         base.Setup(maxHp);
+        
+        //_states 초기화
+        _states = new State<Enemy>[state_count];
+        _states[(int)EnemyStates.IsGround] = new EnemyOwnedStates.IsGround();
+        _states[(int)EnemyStates.IsAir] = new EnemyOwnedStates.IsAir();
+        _states[(int)EnemyStates.IsJump] = new EnemyOwnedStates.IsJump();
+        _states[(int)EnemyStates.IsWall] = new EnemyOwnedStates.IsWall();
+        _states[(int)EnemyStates.IsMove] = new EnemyOwnedStates.IsMove();
+        _states[(int)EnemyStates.IsStun] = new EnemyOwnedStates.IsStun();
+        _states[(int)EnemyStates.IsAttacked] = new EnemyOwnedStates.IsAttacked();
+        _states[(int)EnemyStates.IsAttacking] = new EnemyOwnedStates.IsAttacking();
+        _states[(int)EnemyStates.IsDetect] = new EnemyOwnedStates.IsDetect();
+        _states[(int)EnemyStates.IsDie] = new EnemyOwnedStates.IsDie();
+        _states[(int)EnemyStates.IsCool] = new EnemyOwnedStates.IsCool();
+        
+        _stateManager = new StateManager<Enemy>();
+        _stateManager.Setup(this,state_count,_states);
     }
-    public void Awake()
-    {
-        states = new State[12];
-        states[(int)EnemyStates.IsGround] = new EnemyOwnedStates.IsGround();
-        states[(int)EnemyStates.IsAir] = new EnemyOwnedStates.IsAir();
-        states[(int)EnemyStates.IsJump] = new EnemyOwnedStates.IsJump();
-        states[(int)EnemyStates.IsWall] = new EnemyOwnedStates.IsWall();
-        states[(int)EnemyStates.IsMove] = new EnemyOwnedStates.IsMove();
-        states[(int)EnemyStates.IsStun] = new EnemyOwnedStates.IsStun();
-        states[(int)EnemyStates.IsAttacked] = new EnemyOwnedStates.IsAttacked();
-        states[(int)EnemyStates.IsAttacking] = new EnemyOwnedStates.IsAttacking();
-        states[(int)EnemyStates.IsDetect] = new EnemyOwnedStates.IsDetect();
-        states[(int)EnemyStates.IsDie] = new EnemyOwnedStates.IsDie();
-        states[(int)EnemyStates.IsCool] = new EnemyOwnedStates.IsCool();
-    }
+
+    //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
     public override void Updated()
     {
-        
+        //상태 매니저의 Execute실행
+        _stateManager.Execute();
+
+        //상태 추가 제거 테스트용
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            AddState(_states[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            RemoveState(_states[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            AddState(_states[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            RemoveState(_states[1]);
+        }
+    }
+
+    //상태 추가 메소드
+    public void AddState(State<Enemy> newState)
+    {
+        _stateManager.AddState(newState);
+    }
+    
+    //상태 제거 메소드
+    public void RemoveState(State<Enemy> remState)
+    {
+        _stateManager.RemoveState(remState);
     }
 
 }
