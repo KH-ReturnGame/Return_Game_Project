@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,13 @@ public class Entity_Manager : MonoBehaviour
     private void Awake()
     {
         //플레이어 생성
-        _player = new Player(100f,playerPrefab);
+        GameObject clone = Instantiate(playerPrefab);
+        _player = clone.GetComponent<Player>();
+        _player.Setup(100f);
+    }
+
+    private void Update()
+    {
+        _player.Updated();
     }
 }

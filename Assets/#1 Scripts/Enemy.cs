@@ -30,7 +30,10 @@ public class Enemy : Entity
     //"현재" 에너미가 가지고 있는 모든 상태
     private State[] currentState;
 
-    public Enemy(float hp,GameObject playerPrefab) : base(hp,playerPrefab){}
+    public override void Setup(float maxHp)
+    {
+        base.Setup(maxHp);
+    }
     public void Awake()
     {
         states = new State[12];
@@ -46,4 +49,9 @@ public class Enemy : Entity
         states[(int)EnemyStates.IsDie] = new EnemyOwnedStates.IsDie();
         states[(int)EnemyStates.IsCool] = new EnemyOwnedStates.IsCool();
     }
+    public override void Updated()
+    {
+        
+    }
+
 }

@@ -27,13 +27,6 @@ public class Player_Movement : MonoBehaviour
     {
         //입력 체크하기
         CheckInput();
-        
-        
-        //테스트용 나중에 지우셈
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            _player.AddState(_player._states[0]);
-        }
     }
 
     //0.02초마다 실행
