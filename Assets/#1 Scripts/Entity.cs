@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 /// 모든 생명체의 부모클래스
 /// </summary>
 /// <returns></returns>
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     //최대 체력
     private float _maxHp;
@@ -15,22 +16,21 @@ public class Entity : MonoBehaviour
     private float _currentHp;
 
     /// <summary>
-    /// Entity 클래스의 생성자임, 매개변수로 최대체력과 생성할 생명체의 Prefab를 받음
+    /// Entity 클래스 기초 설정을 위한 Setup메소드, 매개변수로 최대체력을 받음
     /// </summary>
     /// <returns>
     /// Null
     /// </returns>
-    public Entity(float maxHp,GameObject createObj)
+    public virtual void Setup(float maxHp)
     {
         //매개변수로 받은 값들을 지정해주기
         _maxHp = maxHp;
         _currentHp = maxHp;
-        
-        //생명체를 생성
-        Instantiate(createObj);
-        
-        Debug.Log(_maxHp);
+        Debug.Log("maxHp : "+_maxHp);
     }
+
+    //추상클래스인 updated메소드
+    public abstract void Updated();
 
     /// <summary>
     /// 체력 회복 메서드
