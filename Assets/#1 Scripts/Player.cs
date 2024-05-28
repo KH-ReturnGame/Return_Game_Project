@@ -31,7 +31,6 @@ public class Player : Entity
     //플레이어가 가질 수 있는 모든 상태들 배열
     public State<Player>[] _states;
     private StateManager<Player> _stateManager;
-
     /// <summary>
     /// Player 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
     /// </summary>
