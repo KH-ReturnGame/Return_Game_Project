@@ -61,11 +61,11 @@ public class Player_Movement : MonoBehaviour
         */
 
         // 대시 실행
-        if (_isDashing)
-        {
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash]))
+        if (!_isDashing && 
+            Input.GetKeyDown(KeyCode.LeftShift) && 
+            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash]) &&
+            _movementInputDirection != 0
+            )
         {
             StartCoroutine(Dash());
         }

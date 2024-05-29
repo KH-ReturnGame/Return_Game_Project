@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d9c22d58162ab4ea7117a7de753d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpForce: 5
+  _jumpForce: 8
   tr: {fileID: 576055015557389213}
 --- !u!96 &576055015557389213
 TrailRenderer:
