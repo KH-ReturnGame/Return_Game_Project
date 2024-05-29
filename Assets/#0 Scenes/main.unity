@@ -1240,11 +1240,11 @@ GameObject:
   - component: {fileID: 1408647623}
   m_Layer: 0
   m_Name: player_test
-  m_TagString: Untagged
+  m_TagString: player_test
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1408647615
 SpriteRenderer:
   m_ObjectHideFlags: 0

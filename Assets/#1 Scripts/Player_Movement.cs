@@ -22,8 +22,6 @@ public class Player_Movement : MonoBehaviour
     public float groundCheckDistance = 0.1f;
     private bool isGrounded;
     */
-
-    private bool _canDash = true;       // 대시 가능 상태
     private bool _isDashing;            // 대시 중 상태
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
@@ -37,6 +35,7 @@ public class Player_Movement : MonoBehaviour
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _player = GetComponent<Player>();
+        _player.AddState(_player._states[(int)PlayerStates.CanDash]);
     }
 
     //매 프레임 실행
@@ -66,7 +65,7 @@ public class Player_Movement : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash]))
         {
             StartCoroutine(Dash());
         }
@@ -106,7 +105,7 @@ public class Player_Movement : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        _canDash = false;
+        _player.RemoveState(_player._states[(int)PlayerStates.CanDash]);
         _isDashing = true;
         float originalGravity = _playerRigidbody.gravityScale;      // 플레이어 원래 중력 저장
         _playerRigidbody.gravityScale = 0f;     // 중력 0으로 바꿔 대시중에 영향 없게 설정 
@@ -117,6 +116,6 @@ public class Player_Movement : MonoBehaviour
         _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
         _isDashing = false;
         yield return new WaitForSeconds(_dashCooldown);
-        _canDash = true;
+        _player.AddState(_player._states[(int)PlayerStates.CanDash]);
     }
 }

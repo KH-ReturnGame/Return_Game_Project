@@ -29,7 +29,7 @@ public class Enemy : Entity
     public static int state_count = 12;
     //에너미가 가질 수 있는 모든 상태들
     private State<Enemy>[] _states;
-    private StateManager<Enemy> _stateManager;
+    public StateManager<Enemy> _stateManager;
 
     /// <summary>
     /// Enemy 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출

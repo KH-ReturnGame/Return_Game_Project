@@ -6,7 +6,7 @@ public class StateManager<T> where T : class
     //자식 클래스를 가리킴
     private T _ownerEntity;
     //현재가지고 있는 모든 상태 리스트
-    private List<State<T>> _currentState;
+    public List<State<T>> _currentState;
     //가지고 있을 수 있는 상태 개수
     private int _stateCount;
     //가지고 있을 수 있는 상태 종류
