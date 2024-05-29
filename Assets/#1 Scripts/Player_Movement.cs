@@ -77,7 +77,10 @@ public class Player_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //움직임 적용
-        ApplyMovement();
+        if (!_isDashing)
+        {
+            ApplyMovement();
+        }
 
         //대시
         if (_isDashing)
@@ -107,7 +110,7 @@ public class Player_Movement : MonoBehaviour
         _isDashing = true;
         float originalGravity = _playerRigidbody.gravityScale;      // 플레이어 원래 중력 저장
         _playerRigidbody.gravityScale = 0f;     // 중력 0으로 바꿔 대시중에 영향 없게 설정 
-        _playerRigidbody.velocity = new Vector2(transform.localScale.x * _dashPower, 0f);       // 대시 적용
+        _playerRigidbody.velocity = new Vector2(_movementInputDirection*_dashPower, 0);      // 대시 적용
         tr.emitting = true;     // 이펙트 적용
         yield return new WaitForSeconds(_dashTime);
         tr.emitting = false;
