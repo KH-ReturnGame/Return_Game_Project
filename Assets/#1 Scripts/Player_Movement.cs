@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using PlayerOwnedStates;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 /// <summary>
@@ -12,6 +9,7 @@ public class Player_Movement : MonoBehaviour
 {
     private Rigidbody2D _playerRigidbody;
     private float _movementInputDirection;
+    private float _recentDirection;
     private float _movementSpeed = 10.00f;
     private Player _player;
 
@@ -62,8 +60,7 @@ public class Player_Movement : MonoBehaviour
         // 대시 실행
         if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]) && 
             Input.GetKeyDown(KeyCode.LeftShift) && 
-            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash]) &&
-            _movementInputDirection != 0
+            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash])
             )
         {
             StartCoroutine(Dash());
@@ -84,6 +81,10 @@ public class Player_Movement : MonoBehaviour
     private void CheckInput()
     {
         _movementInputDirection = Input.GetAxisRaw("Horizontal");
+        if (_movementInputDirection != 0)
+        {
+            _recentDirection = _movementInputDirection;
+        }
     }
 
     private void ApplyMovement()
@@ -101,8 +102,9 @@ public class Player_Movement : MonoBehaviour
         _player.RemoveState(_player._states[(int)PlayerStates.CanDash]);
         _player.AddState(_player._states[(int)PlayerStates.IsDashing]);
         float originalGravity = _playerRigidbody.gravityScale;      // 플레이어 원래 중력 저장
-        _playerRigidbody.gravityScale = 0f;     // 중력 0으로 바꿔 대시중에 영향 없게 설정 
-        _playerRigidbody.velocity = new Vector2(_movementInputDirection*_dashPower, 0);      // 대시 적용
+        _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
+        _playerRigidbody.velocity = Vector2.zero;
+        _playerRigidbody.velocity = new Vector2(_recentDirection*_dashPower, 0);      // 대시 적용
         tr.emitting = true;     // 이펙트 적용
         yield return new WaitForSeconds(_dashTime);
         tr.emitting = false;
