@@ -51,12 +51,12 @@ public class Player_Movement : MonoBehaviour
         }
         /*
          //바닥 체크가 가능해지면 사용하는 코드
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround] && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
         */
-
+        
         // 대시 실행
         if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]) && 
             Input.GetKeyDown(KeyCode.LeftShift) && 
