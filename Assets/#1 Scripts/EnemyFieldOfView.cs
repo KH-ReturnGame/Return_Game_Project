@@ -66,11 +66,13 @@ public class EnemyFieldOfView : MonoBehaviour {
                 if (rayHitedTarget)
                 {
                     Debug.DrawLine(originPos, rayHitedTarget.point, Color.yellow);
+                    // Debug.Log("벽에 막힘");
                 }
                 else
                 {
                     hitedTargetContainer.Add(hitedTarget);
                     Debug.DrawLine(originPos, targetPos, Color.red);
+                    // Debug.Log("감지!");
                 }
             }
         }
