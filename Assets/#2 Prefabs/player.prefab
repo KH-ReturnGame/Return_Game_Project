@@ -132,7 +132,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 80818c9c20f59fa4fb3459d806cbe71c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementSpeed: 10
-  _jumpForce: 8
+  _jumpForce: 15
   tr: {fileID: 576055015557389213}
 --- !u!96 &576055015557389213
 TrailRenderer:

@@ -24,7 +24,7 @@ public class Player_Movement : MonoBehaviour
     */
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
-    private float _dashCooldown = 2f;   // 대시 쿨타임
+    private float _dashCooldown = 1f;   // 대시 쿨타임
 
     [SerializeField] private TrailRenderer tr;
 
