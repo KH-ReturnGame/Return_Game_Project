@@ -12,8 +12,9 @@ public class Player_Movement : MonoBehaviour
     private float _recentDirection;
     private float _movementSpeed = 10.00f;
     private Player _player;
+    SpriteRenderer spriteRenderer;
 
-    public float _jumpForce = 5f;       // 점프 힘 관리     
+    public float _jumpForce = 5f;     
     /*
      - 무한 점프 방지 관련 변수
     public LayerMask groundLayer;
@@ -22,15 +23,15 @@ public class Player_Movement : MonoBehaviour
     */
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
-    private float _dashCooldown = 1f;   // 대시 쿨타임
+    private float _dashCooldown = 2f;   // 대시 쿨타임
 
     [SerializeField] private TrailRenderer tr;
-
 
     //제일 처음 호출
     void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         _player = GetComponent<Player>();
         _player.AddState(_player._states[(int)PlayerStates.CanDash]);
     }
@@ -66,6 +67,11 @@ public class Player_Movement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
+        // 방향전환
+        if (_recentDirection != 0)
+        {
+            spriteRenderer.flipX = _recentDirection == 1;
+        }
     }
 
     //0.02초마다 실행
@@ -104,7 +110,7 @@ public class Player_Movement : MonoBehaviour
         float originalGravity = _playerRigidbody.gravityScale;      // 플레이어 원래 중력 저장
         _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
         _playerRigidbody.velocity = Vector2.zero;
-        _playerRigidbody.velocity = new Vector2(_recentDirection*_dashPower, 0);      // 대시 적용
+        _playerRigidbody.velocity = new Vector2(_recentDirection * _dashPower, 0);      // 대시 적용
         tr.emitting = true;     // 이펙트 적용
         yield return new WaitForSeconds(_dashTime);
         tr.emitting = false;
