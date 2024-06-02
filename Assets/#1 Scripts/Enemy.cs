@@ -64,24 +64,6 @@ public class Enemy : Entity
     {
         //상태 매니저의 Execute실행
         _stateManager.Execute();
-
-        //상태 추가 제거 테스트용
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            AddState(_states[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            RemoveState(_states[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            AddState(_states[1]);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            RemoveState(_states[1]);
-        }
     }
 
     //상태 추가 메소드

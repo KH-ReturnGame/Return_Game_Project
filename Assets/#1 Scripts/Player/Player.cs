@@ -64,24 +64,6 @@ public class Player : Entity
     {
         //상태 매니저의 Execute실행
         _stateManager.Execute();
-
-        //상태 추가 제거 테스트용
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AddState(_states[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            RemoveState(_states[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            AddState(_states[1]);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RemoveState(_states[1]);
-        }
     }
 
     //상태 추가 메소드
