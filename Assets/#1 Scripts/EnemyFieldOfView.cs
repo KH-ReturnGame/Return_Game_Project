@@ -18,9 +18,12 @@ public class EnemyFieldOfView : MonoBehaviour {
 
     private float m_horizontalViewHalfAngle = 0f; // 시야각의 절반 값
 
+    private Enemy _enemy;
+
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
+        _enemy = GetComponent<Enemy>();
     }
 
     private void OnDrawGizmos()
@@ -65,14 +68,15 @@ public class EnemyFieldOfView : MonoBehaviour {
                 RaycastHit2D rayHitedTarget = Physics2D.Raycast(originPos, dir, m_viewRadius, m_viewObstacleMask);
                 if (rayHitedTarget)
                 {
+                    Debug.Log("벽에 막힘");
                     Debug.DrawLine(originPos, rayHitedTarget.point, Color.yellow);
-                    // Debug.Log("벽에 막힘");
                 }
                 else
                 {
+                    Debug.Log("감지!");
                     hitedTargetContainer.Add(hitedTarget);
                     Debug.DrawLine(originPos, targetPos, Color.red);
-                    // Debug.Log("감지!");
+                    _enemy.AddState(_enemy._states[(int)EnemyStates.IsDetect]);
                 }
             }
         }
