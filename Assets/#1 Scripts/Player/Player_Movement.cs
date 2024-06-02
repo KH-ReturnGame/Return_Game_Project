@@ -9,7 +9,7 @@ public class Player_Movement : MonoBehaviour
 {
     private Rigidbody2D _playerRigidbody;
     private float _movementInputDirection;
-    private float _recentDirection;
+    private float _recentDirection = 1;
     [SerializeField]
     private float _movementSpeed = 10.00f;
     private Player _player;
@@ -25,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
     private float _dashCooldown = 1f;   // 대시 쿨타임
+    private float originalGravity;      // 플레이어 원래 중력
 
     [SerializeField] private TrailRenderer tr;
 
@@ -35,6 +36,7 @@ public class Player_Movement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         _player = GetComponent<Player>();
         _player.AddState(_player._states[(int)PlayerStates.CanDash]);
+        originalGravity = _playerRigidbody.gravityScale;
     }
 
     //매 프레임 실행
@@ -43,10 +45,23 @@ public class Player_Movement : MonoBehaviour
         //입력 체크하기
         CheckInput();
         
-         //바닥 체크가 가능해지면 사용하는 코드
-        if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && Input.GetButtonDown("Jump"))
+        //바닥 체크가 가능해지면 사용하는 코드
+        if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]))
         {
-            Jump();
+            if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
+                 Input.GetButtonDown("Jump"))
+            {
+                _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
+                Jump();
+            }
+        }
+        else
+        {
+            if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
+                 Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
         }
         
         // 대시 실행
@@ -91,15 +106,16 @@ public class Player_Movement : MonoBehaviour
 
     private void Jump()
     {
+        Debug.Log("jump");
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
-        _playerRigidbody.AddForce(Vector3.up * _jumpForce, ForceMode2D.Impulse);
+        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x,_jumpForce);
     }
 
     private IEnumerator Dash()
     {
+        Debug.Log("dash");
         _player.RemoveState(_player._states[(int)PlayerStates.CanDash]);
         _player.AddState(_player._states[(int)PlayerStates.IsDashing]);
-        float originalGravity = _playerRigidbody.gravityScale;      // 플레이어 원래 중력 저장
         _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
         _playerRigidbody.velocity = Vector2.zero;
         _playerRigidbody.velocity = new Vector2(_recentDirection * _dashPower, 0);      // 대시 적용
