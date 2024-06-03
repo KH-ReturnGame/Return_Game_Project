@@ -18,12 +18,15 @@ public class EnemyFieldOfView : MonoBehaviour {
 
     private float m_horizontalViewHalfAngle = 0f; // 시야각의 절반 값
 
-    private Enemy _enemy;
-
+    private Enemy testEnemy;
+    public void Start()
+    {
+        testEnemy = this.GetComponent<Enemy>();
+        testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsAir]);
+    }
     private void Awake()
     {
         m_horizontalViewHalfAngle = m_horizontalViewAngle * 0.5f;
-        _enemy = GetComponent<Enemy>();
     }
 
     private void OnDrawGizmos()
@@ -76,7 +79,7 @@ public class EnemyFieldOfView : MonoBehaviour {
                     Debug.Log("감지!");
                     hitedTargetContainer.Add(hitedTarget);
                     Debug.DrawLine(originPos, targetPos, Color.red);
-                    _enemy.AddState(_enemy._states[(int)EnemyStates.IsDetect]);
+                    testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDetect]);
                 }
             }
         }

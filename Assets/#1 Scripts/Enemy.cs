@@ -68,7 +68,7 @@ public class Enemy : Entity
         //상태 추가 제거 테스트용
         if (Input.GetKeyDown(KeyCode.T))
         {
-            AddState(_states[0]);
+            AddState(_states[(int)EnemyStates.IsGround]);
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
