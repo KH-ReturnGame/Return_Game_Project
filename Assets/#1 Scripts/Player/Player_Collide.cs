@@ -11,17 +11,19 @@ public class Player_Collide : MonoBehaviour
     private float maxSlopeAngle = 45f;
     
     private Tilemap tilemap;
+    public GameObject hi;
 
     public void Start()
     {
         _player = this.GetComponentInParent<Player>();
         groundLayer = 1 << LayerMask.NameToLayer("platform");
+        Debug.Log(groundLayer);
         tilemap = GameObject.FindGameObjectWithTag("ground").GetComponent<Tilemap>();
     }
 
     public void Update()
     {
-        Debug.Log(IsOnSlope());
+        
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -40,18 +42,5 @@ public class Player_Collide : MonoBehaviour
         {
             _player.RemoveState(_player._states[(int)PlayerStates.IsGround]);    
         }
-    }
-
-    public bool IsOnSlope()
-    {
-        Debug.DrawRay(transform.position, Vector3.down*RAY_DISTANCE,Color.red);
-        slopeHit = Physics2D.Raycast(transform.position, Vector2.down * RAY_DISTANCE, groundLayer);
-        if (slopeHit)
-        {
-            Vector3Int cellPosition = tilemap.WorldToCell(slopeHit.point);
-            Sprite tile = tilemap.GetSprite(cellPosition);
-            Debug.Log(tile.name);
-        }
-        return false;
     }
 }
