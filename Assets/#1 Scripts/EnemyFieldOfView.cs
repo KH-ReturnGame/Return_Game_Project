@@ -22,7 +22,6 @@ public class EnemyFieldOfView : MonoBehaviour {
     public void Start()
     {
         testEnemy = this.GetComponent<Enemy>();
-        testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsAir]);
     }
     private void Awake()
     {
@@ -79,15 +78,21 @@ public class EnemyFieldOfView : MonoBehaviour {
                     Debug.Log("감지!");
                     hitedTargetContainer.Add(hitedTarget);
                     Debug.DrawLine(originPos, targetPos, Color.red);
-                    testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDetect]);
+                    // testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDetect]);
                 }
             }
         }
 
         if (hitedTargetContainer.Count > 0)
+        {
+            testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDetect]);
             return hitedTargetContainer.ToArray();
+        }
         else
+        {
+            testEnemy.RemoveState(testEnemy._states[(int)EnemyStates.IsDetect]);
             return null;
+        }
     }
 
     // -180~180의 값을 Up Vector 기준 Local Direction으로 변환시켜줌.

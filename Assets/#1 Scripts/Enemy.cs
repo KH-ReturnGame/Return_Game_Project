@@ -11,7 +11,6 @@ public enum EnemyStates
     IsAir,
     IsJump,
     IsWall,
-    //
     IsMove,
     IsStun,
     IsAttacked,
@@ -26,7 +25,7 @@ public enum EnemyStates
 public class Enemy : Entity
 {
     //에너미가 가질 수 있는 모든 상태 개수
-    public static int state_count = 12;
+    public static int state_count = 11;
     //에너미가 가질 수 있는 모든 상태들
     public State<Enemy>[] _states;
     public StateManager<Enemy> _stateManager;
@@ -56,7 +55,7 @@ public class Enemy : Entity
         _states[(int)EnemyStates.IsCool] = new EnemyOwnedStates.IsCool();
         
         _stateManager = new StateManager<Enemy>();
-        _stateManager.Setup(this,state_count,_states);
+        _stateManager.Setup(this, state_count, _states);
     }
 
     //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
