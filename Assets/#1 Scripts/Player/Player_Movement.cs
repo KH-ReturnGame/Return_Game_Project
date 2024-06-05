@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// 플레이어 움직임 담당 클래스
@@ -15,13 +16,8 @@ public class Player_Movement : MonoBehaviour
     private Player _player;
     SpriteRenderer spriteRenderer;
 
-    public float _jumpForce = 5f;     
-    /*
-     - 무한 점프 방지 관련 변수
-    public LayerMask groundLayer;
-    public float groundCheckDistance = 0.1f;
-    private bool isGrounded;
-    */
+    public float _jumpForce = 5f;    
+    
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
     private float _dashCooldown = 1f;   // 대시 쿨타임
@@ -106,14 +102,14 @@ public class Player_Movement : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log("jump");
+        //Debug.Log("jump");
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x,_jumpForce);
     }
 
     private IEnumerator Dash()
     {
-        Debug.Log("dash");
+        //Debug.Log("dash");
         _player.RemoveState(_player._states[(int)PlayerStates.CanDash]);
         _player.AddState(_player._states[(int)PlayerStates.IsDashing]);
         _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 

@@ -14,6 +14,7 @@ public enum PlayerStates
     IsAir,
     IsJump,
     IsWall,
+    IsSlope,
     //
     IsMove,
     IsStun,
@@ -28,7 +29,7 @@ public enum PlayerStates
 public class Player : Entity
 {
     //플레이어가 가질 수 있는 모든 상태 개수
-    public static int state_count = 10;
+    public static int state_count = 11;
     //플레이어가 가질 수 있는 모든 상태들 배열
     public State<Player>[] _states;
     public StateManager<Player> _stateManager;
@@ -50,6 +51,7 @@ public class Player : Entity
         _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
         _states[(int)PlayerStates.IsJump] = new PlayerOwnedStates.IsJump();
         _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall();
+        _states[(int)PlayerStates.IsSlope] = new PlayerOwnedStates.IsSlope();
         _states[(int)PlayerStates.IsMove] = new PlayerOwnedStates.IsMove();
         _states[(int)PlayerStates.IsStun] = new PlayerOwnedStates.IsStun();
         _states[(int)PlayerStates.IsAttacked] = new PlayerOwnedStates.IsAttacked();
