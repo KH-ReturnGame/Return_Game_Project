@@ -9,7 +9,13 @@ public class Player_Movement : MonoBehaviour
 {
     private Rigidbody2D _playerRigidbody;
     private float _movementInputDirection;
+<<<<<<< Updated upstream:Assets/#1 Scripts/Player_Movement.cs
     private float _recentDirection;
+=======
+    private float _recentDirection = 1;
+    private bool IsTouchingWall;
+    [SerializeField]
+>>>>>>> Stashed changes:Assets/#1 Scripts/Player/Player_Movement.cs
     private float _movementSpeed = 10.00f;
     private Player _player;
 
@@ -30,6 +36,10 @@ public class Player_Movement : MonoBehaviour
 
 
 
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+
+
     //제일 처음 호출
     void Start()
     {
@@ -48,6 +58,9 @@ public class Player_Movement : MonoBehaviour
 
         //입력 체크하기
         CheckInput();
+
+        IsTouchingWall = IsWalled();
+    
         
 
         // 점프 실행
@@ -72,6 +85,16 @@ public class Player_Movement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
+<<<<<<< Updated upstream:Assets/#1 Scripts/Player_Movement.cs
+=======
+        // 방향전환
+        if (_recentDirection != 0)
+        {
+            spriteRenderer.flipX = _recentDirection == 1;
+            
+        }
+
+>>>>>>> Stashed changes:Assets/#1 Scripts/Player/Player_Movement.cs
     }
 
     //0.02초마다 실행
@@ -100,8 +123,16 @@ public class Player_Movement : MonoBehaviour
         if (_movementInputDirection != 0)
         {
             _recentDirection = _movementInputDirection;
+
+            transform.Find("wall_check").localPosition = new Vector3(_recentDirection,0,0);
         }
     }
+
+    private bool IsWalled()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
 
     private void ApplyMovement()
     {
