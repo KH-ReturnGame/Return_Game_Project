@@ -6493,6 +6493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 3170946791866149626, guid: ecb1a187bbb952b48a49d430ba57c200, type: 3}
+  enemyPrefab: {fileID: 4709975163243856628, guid: ba0a90da0be77314d95fa1179459d8a3, type: 3}
 --- !u!4 &151387235
 Transform:
   m_ObjectHideFlags: 0
