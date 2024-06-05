@@ -25,6 +25,9 @@ public class Player_Movement : MonoBehaviour
     private float _dashCooldown = 1f;   // 대시 쿨타임
 
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+
 
 
     //제일 처음 호출
@@ -35,6 +38,8 @@ public class Player_Movement : MonoBehaviour
         _player.AddState(_player._states[(int)PlayerStates.CanDash]);
     }
 
+    
+
     //매 프레임 실행
     void Update()
     {
@@ -43,6 +48,7 @@ public class Player_Movement : MonoBehaviour
 
         //입력 체크하기
         CheckInput();
+        
 
         // 점프 실행
         if (Input.GetButtonDown("Jump"))
@@ -77,6 +83,16 @@ public class Player_Movement : MonoBehaviour
             ApplyMovement();
         }
     }
+    
+    // 벽감지 기능, hierarchy에 있는 wallcheck값을 Transform WallCheck값으로 지정하여 
+    // 캐릭터 눈 앞에 안보이는 원을 전개해 벽을 감지함
+    // 문제는 캐릭터가 옆을 안봄!!11111
+    private bool IsWalled()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
+  
 
     private void CheckInput()
     {
