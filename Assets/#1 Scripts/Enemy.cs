@@ -28,7 +28,7 @@ public class Enemy : Entity
     //에너미가 가질 수 있는 모든 상태 개수
     public static int state_count = 12;
     //에너미가 가질 수 있는 모든 상태들
-    private State<Enemy>[] _states;
+    public State<Enemy>[] _states;
     public StateManager<Enemy> _stateManager;
 
     /// <summary>
