@@ -42,9 +42,9 @@ public class Player_Movement : MonoBehaviour
         CheckInput();
         
         //바닥 체크가 가능해지면 사용하는 코드
-        if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]))
+        if (_player.IsContainState(PlayerStates.IsDashing))
         {
-            if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
+            if ( _player.IsContainState(PlayerStates.IsGround) && 
                  Input.GetButtonDown("Jump"))
             {
                 _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
@@ -53,7 +53,7 @@ public class Player_Movement : MonoBehaviour
         }
         else
         {
-            if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
+            if ( _player.IsContainState(PlayerStates.IsGround) && 
                  Input.GetButtonDown("Jump"))
             {
                 Jump();
@@ -61,9 +61,9 @@ public class Player_Movement : MonoBehaviour
         }
         
         // 대시 실행
-        if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]) && 
+        if (!_player.IsContainState(PlayerStates.IsDashing) && 
             Input.GetKeyDown(KeyCode.LeftShift) && 
-            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash])
+            _player.IsContainState(PlayerStates.CanDash)
             )
         {
             StartCoroutine(Dash());
@@ -80,7 +80,7 @@ public class Player_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //움직임 적용
-        if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]))
+        if (!_player.IsContainState(PlayerStates.IsDashing))
         {
             ApplyMovement();
         }

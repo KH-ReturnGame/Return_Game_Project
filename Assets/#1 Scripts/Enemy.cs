@@ -79,5 +79,10 @@ public class Enemy : Entity
         State<Enemy> remState = _states[(int)ps];
         _stateManager.RemoveState(remState);
     }
+    //상태 있는지 체크
+    public bool IsContainState(EnemyStates ps)
+    {
+        return _stateManager._currentState.Contains(_states[(int)ps]);
+    }
 
 }
