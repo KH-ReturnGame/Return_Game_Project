@@ -69,14 +69,16 @@ public class Player : Entity
     }
 
     //상태 추가 메소드
-    public void AddState(State<Player> newState)
+    public void AddState(PlayerStates ps)
     {
+        State<Player> newState = _states[(int)ps];
         _stateManager.AddState(newState);
     }
     
     //상태 제거 메소드
-    public void RemoveState(State<Player> remState)
+    public void RemoveState(PlayerStates ps)
     {
+        State<Player> remState = _states[(int)ps];
         _stateManager.RemoveState(remState);
     }
 }

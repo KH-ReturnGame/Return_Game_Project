@@ -67,14 +67,16 @@ public class Enemy : Entity
     }
 
     //상태 추가 메소드
-    public void AddState(State<Enemy> newState)
+    public void AddState(EnemyStates ps)
     {
+        State<Enemy> newState = _states[(int)ps];
         _stateManager.AddState(newState);
     }
     
     //상태 제거 메소드
-    public void RemoveState(State<Enemy> remState)
+    public void RemoveState(EnemyStates ps)
     {
+        State<Enemy> remState = _states[(int)ps];
         _stateManager.RemoveState(remState);
     }
 

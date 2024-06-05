@@ -31,7 +31,7 @@ public class Player_Movement : MonoBehaviour
         _playerRigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         _player = GetComponent<Player>();
-        _player.AddState(_player._states[(int)PlayerStates.CanDash]);
+        _player.AddState(PlayerStates.CanDash);
         originalGravity = _playerRigidbody.gravityScale;
     }
 
@@ -110,8 +110,8 @@ public class Player_Movement : MonoBehaviour
     private IEnumerator Dash()
     {
         //Debug.Log("dash");
-        _player.RemoveState(_player._states[(int)PlayerStates.CanDash]);
-        _player.AddState(_player._states[(int)PlayerStates.IsDashing]);
+        _player.RemoveState(PlayerStates.CanDash);
+        _player.AddState(PlayerStates.IsDashing);
         _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
         _playerRigidbody.velocity = Vector2.zero;
         _playerRigidbody.velocity = new Vector2(_recentDirection * _dashPower, 0);      // 대시 적용
@@ -119,8 +119,8 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(_dashTime);
         tr.emitting = false;
         _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
-        _player.RemoveState(_player._states[(int)PlayerStates.IsDashing]);
+        _player.RemoveState(PlayerStates.IsDashing);
         yield return new WaitForSeconds(_dashCooldown);
-        _player.AddState(_player._states[(int)PlayerStates.CanDash]);
+        _player.AddState(PlayerStates.CanDash);
     }
 }

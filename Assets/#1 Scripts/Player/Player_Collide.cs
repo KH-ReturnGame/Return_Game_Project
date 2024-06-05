@@ -17,7 +17,7 @@ public class Player_Collide : MonoBehaviour
         //Debug.Log("바닥 닿음");
         if (other.CompareTag("ground")) 
         {
-            _player.AddState(_player._states[(int)PlayerStates.IsGround]);
+            _player.AddState(PlayerStates.IsGround);
         }
     }
 
@@ -26,7 +26,7 @@ public class Player_Collide : MonoBehaviour
         //Debug.Log("바닥 떨어짐");
         if (other.CompareTag("ground"))
         {
-            _player.RemoveState(_player._states[(int)PlayerStates.IsGround]);    
+            _player.RemoveState(PlayerStates.IsGround);    
         }
     }
 }
