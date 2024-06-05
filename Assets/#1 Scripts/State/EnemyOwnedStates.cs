@@ -126,15 +126,15 @@ namespace EnemyOwnedStates
     {
         public override void Enter(Enemy entity)
         {
-            
+            Debug.Log("isdetect enter");
         }
         public override void Execute(Enemy entity)
         {
-            
+            Debug.Log("isdetect execute");
         }
         public override void Exit(Enemy entity)
         {
-            
+            Debug.Log("isdetect exit");
         }
     }
     public class IsDie : State<Enemy>
