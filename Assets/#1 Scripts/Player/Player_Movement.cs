@@ -15,19 +15,21 @@ public class Player_Movement : MonoBehaviour
     private Player _player;
     SpriteRenderer spriteRenderer;
 
-    public float _jumpForce = 5f;     
-    /*
-     - 무한 점프 방지 관련 변수
-    public LayerMask groundLayer;
-    public float groundCheckDistance = 0.1f;
-    private bool isGrounded;
-    */
+    public float _jumpForce = 5f;
+    
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
     private float _dashCooldown = 1f;   // 대시 쿨타임
     private float originalGravity;      // 플레이어 원래 중력
 
     [SerializeField] private TrailRenderer tr;
+
+    // 벽타기 관련 변수
+    public LayerMask wallLayer;
+    public float wallCheckDistance = 0.5f;
+    public float wallSlideSpeed = 2f;
+    public float wallJumpForce = 10f;
+   
 
     //제일 처음 호출
     void Start()
@@ -44,12 +46,13 @@ public class Player_Movement : MonoBehaviour
     {
         //입력 체크하기
         CheckInput();
-        
+
+
         //바닥 체크가 가능해지면 사용하는 코드
         if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]))
         {
-            if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
-                 Input.GetButtonDown("Jump"))
+            if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
+                Input.GetButtonDown("Jump"))
             {
                 _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
                 Jump();
@@ -57,18 +60,26 @@ public class Player_Movement : MonoBehaviour
         }
         else
         {
-            if ( _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
-                 Input.GetButtonDown("Jump"))
+            if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
+                Input.GetButtonDown("Jump"))
             {
                 Jump();
             }
         }
+
+        // 벽타기 로직
+        if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsWall]) && !_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && _movementInputDirection != 0)
+        {
+            WallSlide();
+        }
+        // 벽타기 취소
+        else _player.RemoveState(_player._states[(int)PlayerStates.IsWall]);
         
+
         // 대시 실행
         if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]) && 
             Input.GetKeyDown(KeyCode.LeftShift) && 
-            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash])
-            )
+            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash]))
         {
             StartCoroutine(Dash());
         }
@@ -108,7 +119,7 @@ public class Player_Movement : MonoBehaviour
     {
         Debug.Log("jump");
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
-        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x,_jumpForce);
+        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _jumpForce);
     }
 
     private IEnumerator Dash()
@@ -126,5 +137,12 @@ public class Player_Movement : MonoBehaviour
         _player.RemoveState(_player._states[(int)PlayerStates.IsDashing]);
         yield return new WaitForSeconds(_dashCooldown);
         _player.AddState(_player._states[(int)PlayerStates.CanDash]);
+    }
+
+
+
+    private void WallSlide()
+    {
+        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -wallSlideSpeed);
     }
 }

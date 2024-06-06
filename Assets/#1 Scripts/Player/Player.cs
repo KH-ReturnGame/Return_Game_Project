@@ -13,12 +13,13 @@ public enum PlayerStates
     IsDashing,
     IsAir,
     IsJump,
-    IsWall,
+    IsWall, // 벽타기 상태 추가
     //
     IsMove,
     IsStun,
     IsAttacked,
     IsAttacking,
+
 }
 
 /// <summary>
@@ -32,6 +33,9 @@ public class Player : Entity
     //플레이어가 가질 수 있는 모든 상태들 배열
     public State<Player>[] _states;
     public StateManager<Player> _stateManager;
+
+    public bool wall_check { get; set; } // 벽에 붙어 있는지 여부
+
     /// <summary>
     /// Player 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
     /// </summary>
@@ -49,7 +53,7 @@ public class Player : Entity
         _states[(int)PlayerStates.IsDashing] = new PlayerOwnedStates.IsDashing();
         _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
         _states[(int)PlayerStates.IsJump] = new PlayerOwnedStates.IsJump();
-        _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall();
+        _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall(); // 벽타기 상태 초기화
         _states[(int)PlayerStates.IsMove] = new PlayerOwnedStates.IsMove();
         _states[(int)PlayerStates.IsStun] = new PlayerOwnedStates.IsStun();
         _states[(int)PlayerStates.IsAttacked] = new PlayerOwnedStates.IsAttacked();
