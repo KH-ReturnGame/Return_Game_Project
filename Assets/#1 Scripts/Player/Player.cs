@@ -13,7 +13,8 @@ public enum PlayerStates
     IsDashing,
     IsAir,
     IsJump,
-    IsWall, // 벽타기 상태 추가
+    IsWall,
+    IsSlope,
     //
     IsMove,
     IsStun,
@@ -29,7 +30,7 @@ public enum PlayerStates
 public class Player : Entity
 {
     //플레이어가 가질 수 있는 모든 상태 개수
-    public static int state_count = 10;
+    public static int state_count = 11;
     //플레이어가 가질 수 있는 모든 상태들 배열
     public State<Player>[] _states;
     public StateManager<Player> _stateManager;
@@ -53,7 +54,8 @@ public class Player : Entity
         _states[(int)PlayerStates.IsDashing] = new PlayerOwnedStates.IsDashing();
         _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
         _states[(int)PlayerStates.IsJump] = new PlayerOwnedStates.IsJump();
-        _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall(); // 벽타기 상태 초기화
+        _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall();
+        _states[(int)PlayerStates.IsSlope] = new PlayerOwnedStates.IsSlope();
         _states[(int)PlayerStates.IsMove] = new PlayerOwnedStates.IsMove();
         _states[(int)PlayerStates.IsStun] = new PlayerOwnedStates.IsStun();
         _states[(int)PlayerStates.IsAttacked] = new PlayerOwnedStates.IsAttacked();
@@ -71,14 +73,21 @@ public class Player : Entity
     }
 
     //상태 추가 메소드
-    public void AddState(State<Player> newState)
+    public void AddState(PlayerStates ps)
     {
+        State<Player> newState = _states[(int)ps];
         _stateManager.AddState(newState);
     }
     
     //상태 제거 메소드
-    public void RemoveState(State<Player> remState)
+    public void RemoveState(PlayerStates ps)
     {
+        State<Player> remState = _states[(int)ps];
         _stateManager.RemoveState(remState);
+    }
+    //상태 있는지 체크
+    public bool IsContainState(PlayerStates ps)
+    {
+        return _stateManager._currentState.Contains(_states[(int)ps]);
     }
 }

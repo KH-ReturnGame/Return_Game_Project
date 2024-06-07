@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// 플레이어 움직임 담당 클래스
@@ -15,7 +16,7 @@ public class Player_Movement : MonoBehaviour
     private Player _player;
     SpriteRenderer spriteRenderer;
 
-    public float _jumpForce = 5f;
+    public float _jumpForce = 5f;    
     
     private float _dashPower = 24f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
@@ -37,7 +38,7 @@ public class Player_Movement : MonoBehaviour
         _playerRigidbody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         _player = GetComponent<Player>();
-        _player.AddState(_player._states[(int)PlayerStates.CanDash]);
+        _player.AddState(PlayerStates.CanDash);
         originalGravity = _playerRigidbody.gravityScale;
     }
 
@@ -49,10 +50,10 @@ public class Player_Movement : MonoBehaviour
 
 
         //바닥 체크가 가능해지면 사용하는 코드
-        if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]))
+        if (_player.IsContainState(PlayerStates.IsDashing))
         {
-            if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
-                Input.GetButtonDown("Jump"))
+            if ( _player.IsContainState(PlayerStates.IsGround) && 
+                 Input.GetButtonDown("Jump"))
             {
                 _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
                 Jump();
@@ -60,8 +61,8 @@ public class Player_Movement : MonoBehaviour
         }
         else
         {
-            if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && 
-                Input.GetButtonDown("Jump"))
+            if ( _player.IsContainState(PlayerStates.IsGround) && 
+                 Input.GetButtonDown("Jump"))
             {
                 Jump();
             }
@@ -77,9 +78,10 @@ public class Player_Movement : MonoBehaviour
         
 
         // 대시 실행
-        if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]) && 
+        if (!_player.IsContainState(PlayerStates.IsDashing) && 
             Input.GetKeyDown(KeyCode.LeftShift) && 
-            _player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.CanDash]))
+            _player.IsContainState(PlayerStates.CanDash)
+            )
         {
             StartCoroutine(Dash());
         }
@@ -95,7 +97,7 @@ public class Player_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //움직임 적용
-        if (!_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsDashing]))
+        if (!_player.IsContainState(PlayerStates.IsDashing))
         {
             ApplyMovement();
         }
@@ -117,16 +119,16 @@ public class Player_Movement : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log("jump");
+        //Debug.Log("jump");
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _jumpForce);
     }
 
     private IEnumerator Dash()
     {
-        Debug.Log("dash");
-        _player.RemoveState(_player._states[(int)PlayerStates.CanDash]);
-        _player.AddState(_player._states[(int)PlayerStates.IsDashing]);
+        //Debug.Log("dash");
+        _player.RemoveState(PlayerStates.CanDash);
+        _player.AddState(PlayerStates.IsDashing);
         _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
         _playerRigidbody.velocity = Vector2.zero;
         _playerRigidbody.velocity = new Vector2(_recentDirection * _dashPower, 0);      // 대시 적용
@@ -134,9 +136,9 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(_dashTime);
         tr.emitting = false;
         _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
-        _player.RemoveState(_player._states[(int)PlayerStates.IsDashing]);
+        _player.RemoveState(PlayerStates.IsDashing);
         yield return new WaitForSeconds(_dashCooldown);
-        _player.AddState(_player._states[(int)PlayerStates.CanDash]);
+        _player.AddState(PlayerStates.CanDash);
     }
 
 
