@@ -74,7 +74,7 @@ public class Player_Movement : MonoBehaviour
             WallSlide();
         }
         // 벽타기 취소
-        else _player.RemoveState(_player._states[(int)PlayerStates.IsWall]);
+        else _player.RemoveState(PlayerStates.IsWall);
         
 
         // 대시 실행
