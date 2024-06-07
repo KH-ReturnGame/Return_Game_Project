@@ -5,10 +5,14 @@ using UnityEngine;
 public class Player_Collide : MonoBehaviour
 {
     private Player _player;
+    private Tilemap tilemap;
+    public GameObject hi;
+
 
     public void Start()
     {
         _player = this.GetComponentInParent<Player>();
+        tilemap = GameObject.FindGameObjectWithTag("ground").GetComponent<Tilemap>();
     }
 
 
@@ -18,6 +22,10 @@ public class Player_Collide : MonoBehaviour
         if (other.CompareTag("ground")) 
         {
             _player.AddState(PlayerStates.IsGround);
+        }
+        if (other.CompareTag("wall"))
+        {
+            _player.AddState(PlayerStates.IsWall);
         }
     }
 

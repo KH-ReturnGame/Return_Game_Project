@@ -69,7 +69,7 @@ public class Player_Movement : MonoBehaviour
         }
 
         // 벽타기 로직
-        if (_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsWall]) && !_player._stateManager._currentState.Contains(_player._states[(int)PlayerStates.IsGround]) && _movementInputDirection != 0)
+        if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
         {
             WallSlide();
         }

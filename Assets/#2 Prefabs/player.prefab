@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 2960787907019829243}
   - component: {fileID: 7378778305690741217}
   - component: {fileID: 1775427466259828887}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: ground_check
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 3609367718984769133}
   - component: {fileID: 7856473095929938907}
   - component: {fileID: 7411439153145002223}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: wall_check
   m_TagString: Player
   m_Icon: {fileID: 0}
