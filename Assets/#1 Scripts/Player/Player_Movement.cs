@@ -25,12 +25,16 @@ public class Player_Movement : MonoBehaviour
 
     [SerializeField] private TrailRenderer tr;
 
+    private Animator _animator;
+    public GameObject sword;
+
     // 벽타기 관련 변수
     public LayerMask wallLayer;
     public float wallCheckDistance = 0.5f;
     public float wallSlideSpeed = 2f;
     public float wallJumpForce = 10f;
-   
+    private static readonly int IsOpen = Animator.StringToHash("isOpen");
+
 
     //제일 처음 호출
     void Start()
@@ -40,6 +44,8 @@ public class Player_Movement : MonoBehaviour
         _player = GetComponent<Player>();
         _player.AddState(PlayerStates.CanDash);
         originalGravity = _playerRigidbody.gravityScale;
+
+        _animator = sword.GetComponent<Animator>();
     }
 
     //매 프레임 실행
@@ -90,6 +96,19 @@ public class Player_Movement : MonoBehaviour
         if (_recentDirection != 0)
         {
             spriteRenderer.flipX = _recentDirection == 1;
+        }
+        
+        //칼 애니메이션 테스트
+        if (Input.GetKeyDown(KeyCode.Semicolon))
+        {
+            if (_animator.GetInteger("isOpen") != 1)
+            {
+                _animator.SetInteger("isOpen",1);
+            }
+            else if (_animator.GetInteger("isOpen") != 0)
+            {
+                _animator.SetInteger("isOpen",0);
+            }
         }
     }
 
