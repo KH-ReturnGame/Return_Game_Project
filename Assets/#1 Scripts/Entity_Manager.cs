@@ -17,6 +17,9 @@ public class Entity_Manager : MonoBehaviour
     //플레이어 Prefab
     [SerializeField]
     private GameObject playerPrefab;
+    //테스트 에너미 Prefab
+    [SerializeField]
+    private GameObject enemyPrefab;
     
     //제일 처음 한번 호출
     private void Awake()
@@ -27,7 +30,8 @@ public class Entity_Manager : MonoBehaviour
         _player.Setup(100f);
         
         //테스트 에너미 생성
-        testEnemy = new Enemy();
+        GameObject clone_enemy = Instantiate(enemyPrefab);
+        testEnemy = clone_enemy.GetComponent<Enemy>();
         testEnemy.Setup(100f);
     }
 

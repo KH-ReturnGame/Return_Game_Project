@@ -26,7 +26,7 @@ public abstract class Entity : MonoBehaviour
         //매개변수로 받은 값들을 지정해주기
         _maxHp = maxHp;
         _currentHp = maxHp;
-        Debug.Log("maxHp : "+_maxHp);
+        //Debug.Log("maxHp : "+_maxHp);
     }
 
     //추상클래스인 updated메소드
