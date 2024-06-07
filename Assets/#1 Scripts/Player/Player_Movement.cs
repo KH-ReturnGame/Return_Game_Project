@@ -29,7 +29,9 @@ public class Player_Movement : MonoBehaviour
     public LayerMask wallLayer;
     public float wallCheckDistance = 0.5f;
     public float wallSlideSpeed = 2f;
-    public float wallJumpForce = 10f;
+    public float jumptime = 0.3f; 
+    public float wallJumpForce = 30f;
+    public bool isWallJump;
    
 
     //제일 처음 호출
@@ -72,9 +74,20 @@ public class Player_Movement : MonoBehaviour
         if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
         {
             WallSlide();
+            if(Input.GetButtonDown("Jump")) 
+            {
+                isWallJump = true;
+                Debug.Log("벽점프 함");
+                WallJumping();
+                
+            }
         }
         // 벽타기 취소
-        else _player.RemoveState(PlayerStates.IsWall);
+        else
+        {  
+            _player.RemoveState(PlayerStates.IsWall);
+            isWallJump = false;
+        }
         
 
         // 대시 실행
@@ -140,11 +153,23 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(_dashCooldown);
         _player.AddState(PlayerStates.CanDash);
     }
+    private void WallJumping()
+    {
+        if(isWallJump)
+        {
+            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
+        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, wallJumpForce*1.5f);
+        }
+        
+    }
 
 
 
     private void WallSlide()
     {
-        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -wallSlideSpeed);
+        if(!isWallJump)
+        {
+            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -wallSlideSpeed);
+        }
     }
 }
