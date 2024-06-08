@@ -62,7 +62,7 @@ public class Player_Movement : MonoBehaviour
     //매 프레임 실행
     void Update()
     {
-        //가로 입력 체크하기 ----------------------------------------
+        //가로 입력 체크하기 --------------------------------------------------------------------------------
         _movementInputDirection = Input.GetAxisRaw("Horizontal");
         if (_movementInputDirection != 0)
         {
@@ -75,7 +75,7 @@ public class Player_Movement : MonoBehaviour
         }
 
 
-        //점프 코드 ----------------------------------------
+        //점프 코드 --------------------------------------------------------------------------------
         if (_player.IsContainState(PlayerStates.IsDashing))
         {
             if ( _player.IsContainState(PlayerStates.IsGround) && 
@@ -93,8 +93,26 @@ public class Player_Movement : MonoBehaviour
                 Jump();
             }
         }
+        
+        
+        // 대시 실행 --------------------------------------------------------------------------------
+        if (!_player.IsContainState(PlayerStates.IsDashing) && 
+            Input.GetKeyDown(KeyCode.LeftShift) && 
+            _player.IsContainState(PlayerStates.CanDash)
+           )
+        {
+            StartCoroutine(Dash());
+        }
+        
+        
+        //칼 애니메이션 테스트 --------------------------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Semicolon))
+        {
+            _animator.SetBool("open_sword",!_animator.GetBool("open_sword"));
+        }
+        
 
-        // 벽슬라이드, 벽 점프
+        // 벽슬라이드, 벽 점프 --------------------------------------------------------------------------------
         if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
         {
             if(!isWallJump)
@@ -120,24 +138,7 @@ public class Player_Movement : MonoBehaviour
         }
         
         
-        // 대시 실행 ----------------------------------------
-        if (!_player.IsContainState(PlayerStates.IsDashing) && 
-            Input.GetKeyDown(KeyCode.LeftShift) && 
-            _player.IsContainState(PlayerStates.CanDash)
-           )
-        {
-            StartCoroutine(Dash());
-        }
-        
-        
-        //칼 애니메이션 테스트 ----------------------------------------
-        if (Input.GetKeyDown(KeyCode.Semicolon))
-        {
-            _animator.SetBool("open_sword",!_animator.GetBool("open_sword"));
-        }
-        
-        
-        // 아래점프
+        // 아래점프 --------------------------------------------------------------------------------
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetButtonDown("Jump"))
         {
             StartCoroutine(DownJump());
@@ -150,7 +151,6 @@ public class Player_Movement : MonoBehaviour
             _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
             Debug.Log("HojinByulGok");
         }
-        
         // 낙하 공격 실행
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking && _playerRigidbody.velocity.y > 0)
         {
@@ -159,7 +159,7 @@ public class Player_Movement : MonoBehaviour
     }
 
     
-    //0.02초마다 실행  ----------------------------------------
+    //0.02초마다 실행  --------------------------------------------------------------------------------
     private void FixedUpdate()
     {
         //움직임 적용
@@ -185,6 +185,23 @@ public class Player_Movement : MonoBehaviour
         //Debug.Log("jump");
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _jumpForce);
+    }
+    
+    private IEnumerator Dash()
+    {
+        //Debug.Log("dash");
+        _player.RemoveState(PlayerStates.CanDash);
+        _player.AddState(PlayerStates.IsDashing);
+        _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
+        _playerRigidbody.velocity = Vector2.zero;
+        _playerRigidbody.velocity = new Vector2(_recentDirection * _dashPower, 0);      // 대시 적용
+        tr.emitting = true;     // 이펙트 적용
+        yield return new WaitForSeconds(_dashTime);
+        tr.emitting = false;
+        _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
+        _player.RemoveState(PlayerStates.IsDashing);
+        yield return new WaitForSeconds(_dashCooldown);
+        _player.AddState(PlayerStates.CanDash);
     }
     
     //아래점프
@@ -213,22 +230,5 @@ public class Player_Movement : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         particleSystem.Stop();
-    }
-
-    private IEnumerator Dash()
-    {
-        //Debug.Log("dash");
-        _player.RemoveState(PlayerStates.CanDash);
-        _player.AddState(PlayerStates.IsDashing);
-        _playerRigidbody.gravityScale = 0f; // 중력 0으로 바꿔 대시중에 영향 없게 설정 
-        _playerRigidbody.velocity = Vector2.zero;
-        _playerRigidbody.velocity = new Vector2(_recentDirection * _dashPower, 0);      // 대시 적용
-        tr.emitting = true;     // 이펙트 적용
-        yield return new WaitForSeconds(_dashTime);
-        tr.emitting = false;
-        _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
-        _player.RemoveState(PlayerStates.IsDashing);
-        yield return new WaitForSeconds(_dashCooldown);
-        _player.AddState(PlayerStates.CanDash);
     }
 }
