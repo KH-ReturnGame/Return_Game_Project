@@ -7069,6 +7069,13 @@ MonoBehaviour:
   _movementSpeed: 10
   _jumpForce: 5
   tr: {fileID: 1408647623}
+  sword: {fileID: 0}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  wallCheckDistance: 0.5
+  wallSlideSpeed: 2
+  wallJumpForce: 10
 --- !u!95 &1408647618
 Animator:
   serializedVersion: 5

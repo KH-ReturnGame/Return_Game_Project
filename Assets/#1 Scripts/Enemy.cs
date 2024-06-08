@@ -62,6 +62,10 @@ public class Enemy : Entity
     //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
     public override void Updated()
     {
+        if (IsContainState(EnemyStates.IsDie))
+        {
+            return;
+        }
         //상태 매니저의 Execute실행
         _stateManager.Execute();
     }
