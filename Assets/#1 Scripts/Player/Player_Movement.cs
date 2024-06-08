@@ -76,6 +76,7 @@ public class Player_Movement : MonoBehaviour
 
 
         //점프 코드 --------------------------------------------------------------------------------
+        //땅에 있을때, 벽에 있을때
         if (_player.IsContainState(PlayerStates.IsDashing))
         {
             if ( _player.IsContainState(PlayerStates.IsGround) && 

@@ -9,6 +9,7 @@ public enum PlayerStates
 {
     //
     IsGround = 0,
+    CanJump,
     CanDash,
     IsDashing,
     IsAir,
@@ -30,7 +31,7 @@ public enum PlayerStates
 public class Player : Entity
 {
     //플레이어가 가질 수 있는 모든 상태 개수
-    public static int state_count = 11;
+    public static int state_count = Enum.GetValues(typeof(PlayerStates)).Length;
     //플레이어가 가질 수 있는 모든 상태들 배열
     public State<Player>[] _states;
     public StateManager<Player> _stateManager;
@@ -50,6 +51,7 @@ public class Player : Entity
         //_states 초기화
         _states = new State<Player>[state_count];
         _states[(int)PlayerStates.IsGround] = new PlayerOwnedStates.IsGround();
+        _states[(int)PlayerStates.CanJump] = new PlayerOwnedStates.CanJump();
         _states[(int)PlayerStates.CanDash] = new PlayerOwnedStates.CanDash();
         _states[(int)PlayerStates.IsDashing] = new PlayerOwnedStates.IsDashing();
         _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
