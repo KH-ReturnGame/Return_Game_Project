@@ -35,9 +35,11 @@ public class Player_Movement : MonoBehaviour
     public LayerMask wallLayer;
     public float wallCheckDistance = 0.5f;
     public float wallSlideSpeed = 2f;
-    public float wallJumpForce = 10f;
     private static readonly int IsOpen = Animator.StringToHash("isOpen");
-
+    public float jumptime = 0.3f; 
+    public float wallJumpForce = 30f;
+    public bool isWallJump;
+   
 
     //제일 처음 호출
     void Start()
@@ -84,6 +86,31 @@ public class Player_Movement : MonoBehaviour
                 Jump();
             }
         }
+
+        // 벽타기 로직
+        if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
+        {
+            if(!isWallJump)
+            {
+                _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -wallSlideSpeed);
+            }
+            if(Input.GetButtonDown("Jump")) 
+            {
+                isWallJump = true;
+                Debug.Log("벽점프 함");
+                if(isWallJump)
+                {
+                    _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
+                    _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, wallJumpForce*1.5f);
+                }
+            }
+        }
+        // 벽타기 취소
+        else
+        {  
+            _player.RemoveState(PlayerStates.IsWall);
+            isWallJump = false;
+        }
         
         
         // 대시 실행 ----------------------------------------
@@ -95,19 +122,11 @@ public class Player_Movement : MonoBehaviour
             StartCoroutine(Dash());
         }
         
-
-        // 벽슬라이드 로직 ----------------------------------------
-        if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
-        {
-            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -wallSlideSpeed);
-        }
-        // 벽타기 취소
-        else _player.RemoveState(PlayerStates.IsWall);
-        
         
         //칼 애니메이션 테스트 ----------------------------------------
         if (Input.GetKeyDown(KeyCode.Semicolon))
         {
+            spriteRenderer.flipX = _recentDirection == 1;
             _animator.SetBool("open_sword",!_animator.GetBool("open_sword"));
         }
     }
