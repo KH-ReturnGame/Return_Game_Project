@@ -160,18 +160,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3170946791866149626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d9c22d58162ab4ea7117a7de753d94, type: 3}
+  m_Script: {fileID: 11500000, guid: 2785f629cc3303e4ebd27004d190bf73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 10
   _jumpForce: 15
-  tr: {fileID: 576055015557389213}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  wallCheckDistance: 0.5
-  wallSlideSpeed: 2
-  wallJumpForce: 10
+  tr: {fileID: 0}
 --- !u!96 &576055015557389213
 TrailRenderer:
   serializedVersion: 2
@@ -371,7 +364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d35893aae174490995a92e6517c6fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hi: {fileID: 0}
 --- !u!1 &4086492251337365308
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,4 +435,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d35893aae174490995a92e6517c6fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hi: {fileID: 0}
