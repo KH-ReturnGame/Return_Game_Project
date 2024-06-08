@@ -87,7 +87,7 @@ public class Player_Movement : MonoBehaviour
             }
         }
 
-        // 벽타기 로직
+        // 벽슬라이드, 벽 점프
         if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
         {
             if(!isWallJump)
