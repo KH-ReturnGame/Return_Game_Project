@@ -101,14 +101,7 @@ public class Player_Movement : MonoBehaviour
         //칼 애니메이션 테스트
         if (Input.GetKeyDown(KeyCode.Semicolon))
         {
-            if (_animator.GetInteger("isOpen") != 1)
-            {
-                _animator.SetInteger("isOpen",1);
-            }
-            else if (_animator.GetInteger("isOpen") != 0)
-            {
-                _animator.SetInteger("isOpen",0);
-            }
+            _animator.SetBool("open_sword",!_animator.GetBool("open_sword"));
         }
     }
 
