@@ -112,20 +112,21 @@ public class Player_Movement : MonoBehaviour
         
 
         // 벽슬라이드, 벽 점프 --------------------------------------------------------------------------------
-        if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround) && _movementInputDirection != 0)
+        if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround)  && _movementInputDirection != 0)
         {
             if(!isWallJump)
             {
                 _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -wallSlideSpeed);
             }
-            if(Input.GetButtonDown("Jump")) 
+            if(Input.GetButtonDown("Jump") ) 
             {
                 isWallJump = true;
-                Debug.Log("벽점프 함");
+                // Debug.Log("벽점프 함");
                 if(isWallJump)
                 {
                     _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
                     _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, wallJumpForce*1.5f);
+                    // Jump();
                 }
             }
         }
@@ -157,13 +158,10 @@ public class Player_Movement : MonoBehaviour
         }
 
         // CanJump 상태 관리
-        if (_player.IsContainState(PlayerStates.IsGround)) {
+        if (_player.IsContainState(PlayerStates.IsGround) || 
+            _player.IsContainState(PlayerStates.IsWall)) { // 나중에 점프 막는 상태 필요할 때 추가
             _player.AddState(PlayerStates.CanJump);
         }
-        else if (_player.IsContainState(PlayerStates.IsWall)){
-            _player.RemoveState(PlayerStates.CanJump);
-        }
-        // ------------------------> 나중에 점프 막는 기능 구현할 떄 else if 문 추가 
         else
         {
             _player.RemoveState(PlayerStates.CanJump);
