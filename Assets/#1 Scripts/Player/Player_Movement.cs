@@ -79,8 +79,7 @@ public class Player_Movement : MonoBehaviour
         //땅에 있을때, 벽에 있을때
         if (_player.IsContainState(PlayerStates.IsDashing))
         {
-            if ( _player.IsContainState(PlayerStates.IsGround) && 
-                 Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))
             {
                 _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
                 Jump();
@@ -88,8 +87,7 @@ public class Player_Movement : MonoBehaviour
         }
         else
         {
-            if ( _player.IsContainState(PlayerStates.IsGround) && 
-                 Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))
             {
                 Jump();
             }
@@ -157,6 +155,19 @@ public class Player_Movement : MonoBehaviour
         {
             FallAttack();
         }
+
+        // CanJump 상태 관리
+        if (_player.IsContainState(PlayerStates.IsGround)) {
+            _player.AddState(PlayerStates.CanJump);
+        }
+        else if (_player.IsContainState(PlayerStates.IsWall)){
+            _player.RemoveState(PlayerStates.CanJump);
+        }
+        // ------------------------> 나중에 점프 막는 기능 구현할 떄 else if 문 추가 
+        else
+        {
+            _player.RemoveState(PlayerStates.CanJump);
+        }
     }
 
     
@@ -183,9 +194,12 @@ public class Player_Movement : MonoBehaviour
 
     private void Jump()
     {
-        //Debug.Log("jump");
-        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
-        _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _jumpForce);
+        if (_player.IsContainState(PlayerStates.CanJump))
+        {
+            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
+            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _jumpForce);
+        }
+        
     }
     
     private IEnumerator Dash()
