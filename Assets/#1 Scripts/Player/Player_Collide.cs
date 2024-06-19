@@ -22,21 +22,29 @@ public class Player_Collide : MonoBehaviour
         if (other.CompareTag("ground")) 
         {
             _player.AddState(PlayerStates.IsGround);
+            Debug.Log("바닥 닿음");
         }
         if (other.CompareTag("wall"))
         {
             _player.AddState(PlayerStates.IsWall);
+            Debug.Log("벽 붙은 상태임");
         }
+
     }
 
     public void OnTriggerExit2D(Collider2D other)
     {
         //Debug.Log("바닥 떨어짐");
         if (other.CompareTag("ground"))
-        {
+        {   
+            Debug.Log("바닥 떨어짐");
             _player.RemoveState(PlayerStates.IsGround);    
         }
-        
+        if(!other.CompareTag("wall"))
+        {
+            _player.RemoveState(PlayerStates.IsWall);
+            Debug.Log("벽 안붙음");
+        }
 
         
     }

@@ -120,6 +120,7 @@ public class Player_Movement : MonoBehaviour
             }
             if(Input.GetButtonDown("Jump") ) 
             {
+                _player.RemoveState(PlayerStates.IsWall);
                 isWallJump = true;
                 // Debug.Log("벽점프 함");
                 if(isWallJump)
