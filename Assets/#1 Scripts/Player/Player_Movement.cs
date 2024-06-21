@@ -110,6 +110,8 @@ public class Player_Movement : MonoBehaviour
             _animator.SetBool("open_sword",!_animator.GetBool("open_sword"));
         }
         
+        
+        
 
         // 벽슬라이드, 벽 점프 --------------------------------------------------------------------------------
         if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround)  && _movementInputDirection != 0)
@@ -125,9 +127,7 @@ public class Player_Movement : MonoBehaviour
                 // Debug.Log("벽점프 함");
                 if(isWallJump)
                 {
-                    _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
-                    _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, wallJumpForce*1.5f);
-                    // Jump();
+                    Jump();
                 }
             }
         }
