@@ -106,18 +106,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.006824851, y: 0.0068252087}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.9375}
+    oldSize: {x: 0.75, y: 0.96875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4777565, y: 1.9418643}
+  m_Size: {x: 0.781958, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &3170946791866149625
 Rigidbody2D:
@@ -177,6 +177,9 @@ MonoBehaviour:
   wallJumpForce: 10
   isWallJump: 0
   fallImpactParticleSystem: {fileID: 0}
+  platformLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!96 &576055015557389213
 TrailRenderer:
   serializedVersion: 2
@@ -351,7 +354,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.006824851, y: -0.9506439}
+  m_Offset: {x: 0, y: -0.482}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -362,7 +365,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.46, y: 0.03302616}
+  m_Size: {x: 0.75134957, y: 0.04588741}
   m_EdgeRadius: 0
 --- !u!114 &1775427466259828887
 MonoBehaviour:
@@ -423,7 +426,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7360145, y: 0.0038061738}
+  m_Offset: {x: 0.39, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -434,7 +437,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.040266514, y: 1.9268428}
+  m_Size: {x: 0.040266514, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &716640079115588565
 MonoBehaviour:
@@ -461,7 +464,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.7360145, y: 0.0038061738}
+  m_Offset: {x: -0.39, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -472,7 +475,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.040266514, y: 1.9268428}
+  m_Size: {x: 0.040266514, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &8886201393967887226
 GameObject:
