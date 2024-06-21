@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using EnemyOwnedStates;
 
 /// <summary>
 /// 플레이어 움직임 담당 클래스
@@ -46,6 +47,8 @@ public class Player_Movement : MonoBehaviour
     private bool _isFallAttacking = false; // 낙하 공격 여부
     private float _fallAttackSpeed = 44f; // 낙하 공격 
     public ParticleSystem fallImpactParticleSystem;
+    public LayerMask platformLayer;
+    
 
     //제일 처음 호출
     void Start()
@@ -140,13 +143,13 @@ public class Player_Movement : MonoBehaviour
         
         
         // 아래점프 --------------------------------------------------------------------------------
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetButtonDown("Jump"))
+        if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetKey(KeyCode.DownArrow) && Input.GetButtonDown("Jump"))
         {
             StartCoroutine(DownJump());
             _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
             Debug.Log("HojinByulGok");
         }
-        else if (Input.GetButtonDown("Jump") && Input.GetKey(KeyCode.DownArrow))
+        else if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetButtonDown("Jump") && Input.GetKey(KeyCode.DownArrow))
         {
             StartCoroutine(DownJump());
             _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
@@ -245,4 +248,8 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(delay);
         particleSystem.Stop();
     }
+
+    
+
 }
+
