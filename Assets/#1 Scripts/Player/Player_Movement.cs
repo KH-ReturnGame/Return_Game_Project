@@ -153,7 +153,7 @@ public class Player_Movement : MonoBehaviour
             Debug.Log("HojinByulGok");
         }
         // 낙하 공격 실행
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking && _playerRigidbody.velocity.y > 0)
+        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking)
         {
             FallAttack();
         }
