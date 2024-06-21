@@ -6,7 +6,6 @@ public class Player_Collide : MonoBehaviour
 {
     private Player _player;
     private Tilemap tilemap;
-    public GameObject hi;
 
 
     public void Start()
@@ -19,12 +18,12 @@ public class Player_Collide : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log("바닥 닿음");
-        if (other.CompareTag("ground")) 
+        if (other.CompareTag("ground")&&name == "ground_check") 
         {
             _player.AddState(PlayerStates.IsGround);
             Debug.Log("바닥 닿음");
         }
-        if (other.CompareTag("wall"))
+        if (other.CompareTag("wall")&&name == "wall_check")
         {
             _player.AddState(PlayerStates.IsWall);
             Debug.Log("벽 붙은 상태임");
@@ -35,12 +34,12 @@ public class Player_Collide : MonoBehaviour
     public void OnTriggerExit2D(Collider2D other)
     {
         //Debug.Log("바닥 떨어짐");
-        if (other.CompareTag("ground"))
+        if (other.CompareTag("ground")&&name == "ground_check")
         {   
             Debug.Log("바닥 떨어짐");
             _player.RemoveState(PlayerStates.IsGround);    
         }
-        if(!other.CompareTag("wall"))
+        if(other.CompareTag("wall")&&name == "wall_check")
         {
             _player.RemoveState(PlayerStates.IsWall);
             Debug.Log("벽 안붙음");
