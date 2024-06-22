@@ -72,7 +72,7 @@ public class Player_Movement : MonoBehaviour
         // 방향전환
         if (_recentDirection != 0)
         {
-            spriteRenderer.flipX = _recentDirection == 1;
+            spriteRenderer.flipX = _recentDirection != 1;
         }
 
 
@@ -165,6 +165,9 @@ public class Player_Movement : MonoBehaviour
         {
             _player.RemoveState(PlayerStates.CanJump);
         }
+        
+        
+        
     }
 
     
