@@ -18,12 +18,12 @@ public class Player_Movement : MonoBehaviour
     //기본 좌우, 점프
     private float _recentDirection = 1;
     [SerializeField]
-    private float _movementSpeed = 10.00f;
+    private float _movementSpeed = 8.00f;
     private float _movementInputDirection;
-    public float _jumpForce = 15f;    
+    public float _jumpForce = 12.00f;    
     
     //대시
-    private float _dashPower = 24f;     // 대시 힘 관리
+    private float _dashPower = 19.20f;     // 대시 힘 관리
     private float _dashTime = 0.2f;     // 대시 작동 시간 
     private float _dashCooldown = 1f;   // 대시 쿨타임
     private float originalGravity;      // 플레이어 원래 중력
@@ -140,28 +140,28 @@ public class Player_Movement : MonoBehaviour
             _player.RemoveState(PlayerStates.IsWall);
             isWallJump = false;
         }
-        
-        
+
+
         // 아래점프 --------------------------------------------------------------------------------
-        if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetKey(KeyCode.DownArrow) && Input.GetButtonDown("Jump"))
+        if (_player.IsContainState(PlayerStates.IsGround) && Input.GetKey(KeyCode.DownArrow) && Input.GetButtonDown("Jump"))
         {
             StartCoroutine(DownJump());
             _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
             Debug.Log("HojinByulGok");
         }
-        else if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetButtonDown("Jump") && Input.GetKey(KeyCode.DownArrow))
+        else if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetKey(KeyCode.S) && Input.GetButtonDown("Jump"))
         {
             StartCoroutine(DownJump());
             _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
             Debug.Log("HojinByulGok");
         }
-        // 낙하 공격 실행
+        // 낙하 공격 실행 ------------------------------------------------------------------------------
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking)
         {
             FallAttack();
         }
 
-        // CanJump 상태 관리
+        // CanJump 상태 관리 ------------------------------------------------------------------------------
         if (_player.IsContainState(PlayerStates.IsGround) || 
             _player.IsContainState(PlayerStates.IsWall)) { // 나중에 점프 막는 상태 필요할 때 추가
             _player.AddState(PlayerStates.CanJump);
