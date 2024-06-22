@@ -38,14 +38,12 @@ public class Player_Movement : MonoBehaviour
     public float wallCheckDistance = 0.5f;
     public float wallSlideSpeed = 2f;
     private static readonly int IsOpen = Animator.StringToHash("isOpen");
-    public float jumptime = 0.3f; 
-    public float wallJumpForce = 30f;
     public bool isWallJump;
    
     //다운 점프, 낙공
     private float _downJumpDuration = 0.4f;
     private bool _isFallAttacking = false; // 낙하 공격 여부
-    private float _fallAttackSpeed = 44f; // 낙하 공격 
+    private float _fallAttackSpeed = 24f; // 낙하 공격 
     public ParticleSystem fallImpactParticleSystem;
     public LayerMask platformLayer;
     
@@ -143,20 +141,17 @@ public class Player_Movement : MonoBehaviour
 
 
         // 아래점프 --------------------------------------------------------------------------------
-        if (_player.IsContainState(PlayerStates.IsGround) && Input.GetKey(KeyCode.DownArrow) && Input.GetButtonDown("Jump"))
-        {
-            StartCoroutine(DownJump());
-            _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
-            Debug.Log("HojinByulGok");
-        }
-        else if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetKey(KeyCode.S) && Input.GetButtonDown("Jump"))
+        if (_player.IsContainState(PlayerStates.IsGround)  && Input.GetKey(KeyCode.S) && Input.GetButtonDown("Jump"))
         {
             StartCoroutine(DownJump());
             _playerRigidbody.AddForce(Vector2.down * _jumpForce, ForceMode2D.Impulse);
             Debug.Log("HojinByulGok");
         }
         // 낙하 공격 실행 ------------------------------------------------------------------------------
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking)
+        {
+            FallAttack();
+        } else if ( Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.S)  && !_isFallAttacking)
         {
             FallAttack();
         }
