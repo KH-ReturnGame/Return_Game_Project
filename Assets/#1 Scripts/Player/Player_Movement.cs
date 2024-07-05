@@ -29,10 +29,6 @@ public class Player_Movement : MonoBehaviour
     private float originalGravity;      // 플레이어 원래 중력
     [SerializeField] private TrailRenderer tr;
 
-    //검 애니메이션
-    private Animator _animator;
-    public GameObject sword;
-
     // 벽타기 관련 변수
     public LayerMask wallLayer;
     public float wallCheckDistance = 0.5f;
@@ -57,7 +53,6 @@ public class Player_Movement : MonoBehaviour
         _player.AddState(PlayerStates.CanDash);
         _playerCollider = GetComponent<Collider2D>();
         originalGravity = _playerRigidbody.gravityScale;
-        _animator = sword.GetComponent<Animator>();
     }
 
     //매 프레임 실행
@@ -103,16 +98,6 @@ public class Player_Movement : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
-        
-        
-        //칼 애니메이션 테스트 --------------------------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.Semicolon))
-        {
-            _animator.SetBool("open_sword",!_animator.GetBool("open_sword"));
-        }
-        
-        
-        
 
         // 벽슬라이드, 벽 점프 --------------------------------------------------------------------------------
         if (_player.IsContainState(PlayerStates.IsWall) && !_player.IsContainState(PlayerStates.IsGround)  && _movementInputDirection != 0)
