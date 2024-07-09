@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using System;
-using EnemyOwnedStates;
 
 /// <summary>
 /// 플레이어 움직임 담당 클래스
@@ -30,22 +28,13 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private TrailRenderer tr;
 
     // 벽타기 관련 변수
-    public LayerMask wallLayer;
-    public float wallCheckDistance = 0.5f;
     public float wallSlideSpeed = 2f;
-    private static readonly int IsOpen = Animator.StringToHash("isOpen");
     public bool isWallJump;
    
     //다운 점프, 낙공
     private float _downJumpDuration = 0.4f;
-    private bool _isFallAttacking = false; // 낙하 공격 여부
     private float _fallAttackSpeed = 30f; // 낙하 공격 
     public ParticleSystem fallImpactParticleSystem;
-    public LayerMask platformLayer;
-
-    public Transform groundCheck;
-    public float checkRadius;
-    public LayerMask whatIsGround;
     
 
     //제일 처음 호출
@@ -137,10 +126,11 @@ public class Player_Movement : MonoBehaviour
             Debug.Log("HojinByulGok");
         }
         // 낙하 공격 실행 ------------------------------------------------------------------------------
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_isFallAttacking && _playerCollider.enabled == true)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_player.IsContainState(PlayerStates.IsFallAttacking) && _playerCollider.enabled)
         {
             FallAttack();
-        } else if ( Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.S)  && !_isFallAttacking && _playerCollider.enabled == true)
+        } 
+        else if ( Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.S)  && !_player.IsContainState(PlayerStates.IsFallAttacking) && _playerCollider.enabled)
         {
             FallAttack();   
         }
@@ -155,8 +145,16 @@ public class Player_Movement : MonoBehaviour
             _player.RemoveState(PlayerStates.CanJump);
         }
         
-        
-        
+        // 낙하 공격 종료 체크, 바닥 체크
+        if (_player.IsContainState(PlayerStates.IsFallAttacking))
+        {
+            _player.RemoveState(PlayerStates.IsFallAttacking);
+            if (_player.IsContainState(PlayerStates.IsGround))
+            {
+                _playerRigidbody.velocity = Vector2.zero;
+                //TriggerImpactEffect();
+            }
+        }
     }
 
     
@@ -168,19 +166,6 @@ public class Player_Movement : MonoBehaviour
         {
             ApplyMovement();
         }
-        // 낙하 공격 종료 체크, 바닥 체크
-        if (_isFallAttacking)
-        {
-            _isFallAttacking = false;
-            if (Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround))
-            {
-                _playerRigidbody.velocity = Vector2.zero;
-                //TriggerImpactEffect();
-            }
-            
-        }
-
-  
     }
 
     private void ApplyMovement()
@@ -226,7 +211,7 @@ public class Player_Movement : MonoBehaviour
     //낙공
     private void FallAttack()
     {
-        _isFallAttacking = true;
+        _player.AddState(PlayerStates.IsFallAttacking);
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -_fallAttackSpeed);
     }
     

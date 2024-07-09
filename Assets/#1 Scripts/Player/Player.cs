@@ -12,15 +12,10 @@ public enum PlayerStates
     CanJump,
     CanDash,
     IsDashing,
-    IsAir,
-    IsJump,
     IsWall,
-    IsSlope,
     //
     IsMove,
-    IsStun,
-    IsAttacked,
-    IsAttacking,
+    IsFallAttacking,
 
 }
 
@@ -54,14 +49,9 @@ public class Player : Entity
         _states[(int)PlayerStates.CanJump] = new PlayerOwnedStates.CanJump();
         _states[(int)PlayerStates.CanDash] = new PlayerOwnedStates.CanDash();
         _states[(int)PlayerStates.IsDashing] = new PlayerOwnedStates.IsDashing();
-        _states[(int)PlayerStates.IsAir] = new PlayerOwnedStates.IsAir();
-        _states[(int)PlayerStates.IsJump] = new PlayerOwnedStates.IsJump();
         _states[(int)PlayerStates.IsWall] = new PlayerOwnedStates.IsWall();
-        _states[(int)PlayerStates.IsSlope] = new PlayerOwnedStates.IsSlope();
         _states[(int)PlayerStates.IsMove] = new PlayerOwnedStates.IsMove();
-        _states[(int)PlayerStates.IsStun] = new PlayerOwnedStates.IsStun();
-        _states[(int)PlayerStates.IsAttacked] = new PlayerOwnedStates.IsAttacked();
-        _states[(int)PlayerStates.IsAttacking] = new PlayerOwnedStates.IsAttacking();
+        _states[(int)PlayerStates.IsFallAttacking] = new PlayerOwnedStates.IsFallAttacking();
 
         _stateManager = new StateManager<Player>();
         _stateManager.Setup(this,state_count,_states);
