@@ -140,7 +140,6 @@ MonoBehaviour:
   _movementSpeed: 10
   _jumpForce: 15
   tr: {fileID: 576055015557389213}
-  sword: {fileID: 0}
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -149,6 +148,11 @@ MonoBehaviour:
   isWallJump: 0
   fallImpactParticleSystem: {fileID: 0}
   platformLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheck: {fileID: 2960787907019829243}
+  checkRadius: 0
+  whatIsGround:
     serializedVersion: 2
     m_Bits: 0
 --- !u!96 &576055015557389213

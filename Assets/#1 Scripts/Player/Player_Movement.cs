@@ -42,6 +42,10 @@ public class Player_Movement : MonoBehaviour
     private float _fallAttackSpeed = 30f; // 낙하 공격 
     public ParticleSystem fallImpactParticleSystem;
     public LayerMask platformLayer;
+
+    public Transform groundCheck;
+    public float checkRadius;
+    public LayerMask whatIsGround;
     
 
     //제일 처음 호출
@@ -133,12 +137,12 @@ public class Player_Movement : MonoBehaviour
             Debug.Log("HojinByulGok");
         }
         // 낙하 공격 실행 ------------------------------------------------------------------------------
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_isFallAttacking && _playerCollider.enabled == true)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_isFallAttacking && _playerCollider.enabled == true)
         {
             FallAttack();
         } else if ( Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.S)  && !_isFallAttacking && _playerCollider.enabled == true)
         {
-            FallAttack();
+            FallAttack();   
         }
 
         // CanJump 상태 관리 ------------------------------------------------------------------------------
@@ -164,14 +168,19 @@ public class Player_Movement : MonoBehaviour
         {
             ApplyMovement();
         }
-        // 낙하 공격 종료 체크
-                  
-        if (_isFallAttacking && _playerRigidbody.velocity.y == 0)
+        // 낙하 공격 종료 체크, 바닥 체크
+        if (_isFallAttacking)
         {
             _isFallAttacking = false;
-            //TriggerImpactEffect(); // 충격파 이펙트 트리거
+            if (Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround))
+            {
+                _playerRigidbody.velocity = Vector2.zero;
+                //TriggerImpactEffect();
+            }
+            
         }
-        
+
+  
     }
 
     private void ApplyMovement()
@@ -220,7 +229,6 @@ public class Player_Movement : MonoBehaviour
         _isFallAttacking = true;
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -_fallAttackSpeed);
     }
-
     
     private void TriggerImpactEffect()
     {
@@ -234,9 +242,5 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(delay);
         particleSystem.Stop();
     }
-    
-
-    
-
 }
 
