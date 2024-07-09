@@ -39,7 +39,7 @@ public class Player_Movement : MonoBehaviour
     //다운 점프, 낙공
     private float _downJumpDuration = 0.4f;
     private bool _isFallAttacking = false; // 낙하 공격 여부
-    private float _fallAttackSpeed = 24f; // 낙하 공격 
+    private float _fallAttackSpeed = 30f; // 낙하 공격 
     public ParticleSystem fallImpactParticleSystem;
     public LayerMask platformLayer;
     
@@ -133,10 +133,10 @@ public class Player_Movement : MonoBehaviour
             Debug.Log("HojinByulGok");
         }
         // 낙하 공격 실행 ------------------------------------------------------------------------------
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftControl) && !_isFallAttacking)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_isFallAttacking)
         {
             FallAttack();
-        } else if ( Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.S)  && !_isFallAttacking)
+        } else if ( Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.S)  && !_isFallAttacking)
         {
             FallAttack();
         }
@@ -165,11 +165,13 @@ public class Player_Movement : MonoBehaviour
             ApplyMovement();
         }
         // 낙하 공격 종료 체크
+                  
         if (_isFallAttacking && _playerRigidbody.velocity.y == 0)
         {
             _isFallAttacking = false;
-            TriggerImpactEffect(); // 충격파 이펙트 트리거
+            //TriggerImpactEffect(); // 충격파 이펙트 트리거
         }
+        
     }
 
     private void ApplyMovement()
@@ -219,6 +221,7 @@ public class Player_Movement : MonoBehaviour
         _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, -_fallAttackSpeed);
     }
 
+    
     private void TriggerImpactEffect()
     {
         fallImpactParticleSystem.transform.position = transform.position; // 이펙트 위치 설정
@@ -231,6 +234,7 @@ public class Player_Movement : MonoBehaviour
         yield return new WaitForSeconds(delay);
         particleSystem.Stop();
     }
+    
 
     
 
