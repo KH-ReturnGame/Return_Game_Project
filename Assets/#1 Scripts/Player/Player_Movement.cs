@@ -133,10 +133,10 @@ public class Player_Movement : MonoBehaviour
             Debug.Log("HojinByulGok");
         }
         // 낙하 공격 실행 ------------------------------------------------------------------------------
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_isFallAttacking)
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Mouse0) && !_isFallAttacking && _playerCollider.enabled == true)
         {
             FallAttack();
-        } else if ( Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.S)  && !_isFallAttacking)
+        } else if ( Input.GetKey(KeyCode.Mouse0) && Input.GetKey(KeyCode.S)  && !_isFallAttacking && _playerCollider.enabled == true)
         {
             FallAttack();
         }
