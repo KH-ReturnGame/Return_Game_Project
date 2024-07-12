@@ -10,7 +10,7 @@ public class Player_Movement : MonoBehaviour
     //플레이어
     private Rigidbody2D _playerRigidbody;
     private Player _player;
-    SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     private Collider2D _playerCollider;
     
     //기본 좌우, 점프
@@ -66,20 +66,9 @@ public class Player_Movement : MonoBehaviour
 
         //점프 코드 --------------------------------------------------------------------------------
         //땅에 있을때, 벽에 있을때
-        if (_player.IsContainState(PlayerStates.IsDashing))
+        if (Input.GetButtonDown("Jump"))
         {
-            if (Input.GetButtonDown("Jump"))
-            {
-                _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
-                Jump();
-            }
-        }
-        else
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                Jump();
-            }
+            Jump();
         }
         
         
@@ -177,6 +166,10 @@ public class Player_Movement : MonoBehaviour
     {
         if (_player.IsContainState(PlayerStates.CanJump))
         {
+            if (_player.IsContainState(PlayerStates.IsDashing))
+            {
+                _playerRigidbody.gravityScale = originalGravity;    // 중력 값 되돌림
+            }
             _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, 0);
             _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _jumpForce);
         }
