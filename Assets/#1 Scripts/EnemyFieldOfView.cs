@@ -86,12 +86,12 @@ public class EnemyFieldOfView : MonoBehaviour
 
         if (hitedTargetContainer.Count > 0)
         {
-            testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDetect]);
+            testEnemy.AddState(EnemyStates.IsDetect);
             return hitedTargetContainer.ToArray();
         }
         else
         {
-            testEnemy.RemoveState(testEnemy._states[(int)EnemyStates.IsDetect]);
+            testEnemy.RemoveState(EnemyStates.IsDetect);
             return null;
         }
     }
