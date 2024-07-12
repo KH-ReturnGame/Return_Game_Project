@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFieldOfView : MonoBehaviour {
+public class EnemyFieldOfView : MonoBehaviour
+{
 
     [Header("View Config")]
     [Range(0f, 360f)]
