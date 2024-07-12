@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFieldOfView : MonoBehaviour
+public class EnemyFieldOfView : EnemyAi
 {
-
     [Header("View Config")]
     [Range(0f, 360f)]
     [SerializeField] private float m_horizontalViewAngle = 0f; // 시야각
@@ -47,6 +46,12 @@ public class EnemyFieldOfView : MonoBehaviour
 
         FindViewTargets();
     }
+    void FixedUpdate()
+    {
+        m_viewRotateZ = m_viewRotateZ * Direction;
+        Debug.Log(m_viewRotateZ);
+        Debug.Log(Direction);
+    }
 
     public Collider2D[] FindViewTargets()
     {
@@ -77,6 +82,8 @@ public class EnemyFieldOfView : MonoBehaviour
                 else
                 {
                     Debug.Log("감지!");
+                    rage = rage + 1;
+                    Debug.Log(rage);
                     hitedTargetContainer.Add(hitedTarget);
                     Debug.DrawLine(originPos, targetPos, Color.red);
                     // testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDetect]);

@@ -15,8 +15,12 @@ GameObject:
   - component: {fileID: 239621460788207833}
   - component: {fileID: 576055015557389213}
   - component: {fileID: 2048986376942135593}
+<<<<<<< Updated upstream
   - component: {fileID: 8604187387022277946}
   m_Layer: 7
+=======
+  m_Layer: 8
+>>>>>>> Stashed changes
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -403,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d35893aae174490995a92e6517c6fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 --- !u!1 &8088604508735213025
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,3 +506,5 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.034428775, y: 1.067133}
   m_EdgeRadius: 0
+=======
+>>>>>>> Stashed changes
