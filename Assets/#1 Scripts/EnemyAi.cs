@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAi : MonoBehaviours
+public class EnemyAi : MonoBehaviour
 {
     Rigidbody2D rigid;
     public int NextMove;
