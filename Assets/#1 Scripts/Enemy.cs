@@ -62,20 +62,31 @@ public class Enemy : Entity
     //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
     public override void Updated()
     {
+        if (IsContainState(EnemyStates.IsDie))
+        {
+            return;
+        }
         //상태 매니저의 Execute실행
         _stateManager.Execute();
     }
 
     //상태 추가 메소드
-    public void AddState(State<Enemy> newState)
+    public void AddState(EnemyStates ps)
     {
+        State<Enemy> newState = _states[(int)ps];
         _stateManager.AddState(newState);
     }
     
     //상태 제거 메소드
-    public void RemoveState(State<Enemy> remState)
+    public void RemoveState(EnemyStates ps)
     {
+        State<Enemy> remState = _states[(int)ps];
         _stateManager.RemoveState(remState);
+    }
+    //상태 있는지 체크
+    public bool IsContainState(EnemyStates ps)
+    {
+        return _stateManager._currentState.Contains(_states[(int)ps]);
     }
 
 }

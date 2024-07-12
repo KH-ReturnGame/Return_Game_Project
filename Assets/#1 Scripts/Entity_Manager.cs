@@ -16,16 +16,22 @@ public class Entity_Manager : MonoBehaviour
     
     //플레이어 Prefab
     [SerializeField]
-    private GameObject playerPrefab;
+    private GameObject playerPrefab1;
+    [SerializeField]
+    private GameObject playerPrefab2;
+    [SerializeField]
+    private GameObject playerPrefab3;
     //테스트 에너미 Prefab
     [SerializeField]
     private GameObject enemyPrefab;
+
+    private GameObject clone;
     
     //제일 처음 한번 호출
     private void Awake()
     {
         //플레이어 생성
-        GameObject clone = Instantiate(playerPrefab);
+        clone = Instantiate(playerPrefab1);
         _player = clone.GetComponent<Player>();
         _player.Setup(100f);
         
@@ -37,6 +43,27 @@ public class Entity_Manager : MonoBehaviour
 
     private void Update()
     {
+        if (_player && Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Destroy(clone);
+            clone = Instantiate(playerPrefab1);
+            _player = clone.GetComponent<Player>();
+            _player.Setup(100f);
+        }
+        if (_player && Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Destroy(clone);
+            clone = Instantiate(playerPrefab2);
+            _player = clone.GetComponent<Player>();
+            _player.Setup(100f);
+        }
+        if (_player && Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Destroy(clone);
+            clone = Instantiate(playerPrefab3);
+            _player = clone.GetComponent<Player>();
+            _player.Setup(100f);
+        }
         _player.Updated();
         testEnemy.Updated();
     }

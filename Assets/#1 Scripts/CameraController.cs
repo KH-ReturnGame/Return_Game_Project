@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
 
     private CinemachineVirtualCamera _cv;
 
-    private void Start()
+    private void Update()
     {
         _cv = camera.GetComponent<CinemachineVirtualCamera>();
         Transform tr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
