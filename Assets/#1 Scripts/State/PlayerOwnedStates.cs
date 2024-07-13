@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PlayerOwnedStates
 {
-    public class IsGround : State<Player>
+    public class IsGround  : State<Player>
     {
         public override void Enter(Player entity)
         {
@@ -75,6 +75,21 @@ namespace PlayerOwnedStates
         public override void Exit(Player entity)
         {
             
+        }
+    }
+    public class IsSlope : State<Player>
+    {
+        public override void Enter(Player entity)
+        {
+
+        }
+        public override void Execute(Player entity)
+        {
+
+        }
+        public override void Exit(Player entity)
+        {
+
         }
     }
     public class IsMove : State<Player>

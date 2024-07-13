@@ -11,7 +11,8 @@ public abstract class Entity : MonoBehaviour
 {
     //최대 체력
     private float _maxHp;
-    
+    public float MaxHp;
+
     //현재 체력
     private float _currentHp;
 
@@ -27,6 +28,19 @@ public abstract class Entity : MonoBehaviour
         _maxHp = maxHp;
         _currentHp = maxHp;
         //Debug.Log("maxHp : "+_maxHp);
+    }
+
+    //hp Get 함수
+    public float GetHp()
+    {
+
+        return _currentHp;
+    }
+
+    //hp  Set 함수
+    public void SetHp(float newHp)
+    {
+        _currentHp = newHp;
     }
 
     //추상클래스인 updated메소드
@@ -58,14 +72,14 @@ public abstract class Entity : MonoBehaviour
     /// <returns>
     /// Null
     /// </returns>
-    protected void TakeDamage(float hp)
+    public void TakeDamage(float damage)
     {
         //만약 피해를 입었을때 체력이 0이하라면 -> 죽음처리
-        if (_currentHp - hp <= 0)
+        if (_currentHp - damage <= 0 && _currentHp != 0)
         {
-            Debug.Log("gg");
+            Debug.Log(_currentHp+","+damage);
             _currentHp = 0;
         }
-        _currentHp -= hp;
+        _currentHp -= damage;
     }
 }
