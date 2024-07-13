@@ -27,18 +27,18 @@ public class Enemy_Dead : MonoBehaviour
 
         if(testEnemy.GetHp() <= 0)
         {
-            testEnemy.AddState(testEnemy._states[(int)EnemyStates.IsDie]);
+            testEnemy.AddState(EnemyStates.IsDie);
         }
         else
         {
-            testEnemy.RemoveState(testEnemy._states[(int)EnemyStates.IsDie]);
+            testEnemy.RemoveState(EnemyStates.IsDie);
             rigid.velocity = new Vector2(-3, rigid.velocity.y);
-            // ¿©±â´Ù°¡ ¿¡³Ê¹Ì ´Ù¸¥ ÇÔ¼ö ½ÇÇà ½ÃÄÑ¾ß µÇÁö ¾ÊÀ»±î
+            // ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½Ê¹ï¿½ ï¿½Ù¸ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
     }
 
 
-    //ÇÔ¼ö ÀÛµ¿ÇÏ´ÂÁö º¸±â À§ÇØ Àá±ñ ³ÖÀº°Í. ³ªÁß¿£ Áö¿ï °Í
+    //ï¿½Ô¼ï¿½ ï¿½Ûµï¿½ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.name == "Triangle")
