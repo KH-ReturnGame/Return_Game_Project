@@ -28,8 +28,8 @@ public class Enemy : Entity
     //에너미가 가질 수 있는 모든 상태 개수
     public static int state_count = 12;
     //에너미가 가질 수 있는 모든 상태들
-    private State<Enemy>[] _states;
-    private StateManager<Enemy> _stateManager;
+    public State<Enemy>[] _states;
+    public StateManager<Enemy> _stateManager;
 
     /// <summary>
     /// Enemy 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
@@ -62,38 +62,31 @@ public class Enemy : Entity
     //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
     public override void Updated()
     {
+        if (IsContainState(EnemyStates.IsDie))
+        {
+            return;
+        }
         //상태 매니저의 Execute실행
         _stateManager.Execute();
-
-        //상태 추가 제거 테스트용
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            AddState(_states[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            RemoveState(_states[0]);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            AddState(_states[1]);
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            RemoveState(_states[1]);
-        }
     }
 
     //상태 추가 메소드
-    public void AddState(State<Enemy> newState)
+    public void AddState(EnemyStates ps)
     {
+        State<Enemy> newState = _states[(int)ps];
         _stateManager.AddState(newState);
     }
     
     //상태 제거 메소드
-    public void RemoveState(State<Enemy> remState)
+    public void RemoveState(EnemyStates ps)
     {
+        State<Enemy> remState = _states[(int)ps];
         _stateManager.RemoveState(remState);
+    }
+    //상태 있는지 체크
+    public bool IsContainState(EnemyStates ps)
+    {
+        return _stateManager._currentState.Contains(_states[(int)ps]);
     }
 
 }
