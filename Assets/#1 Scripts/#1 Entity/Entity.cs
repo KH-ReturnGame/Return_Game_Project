@@ -10,8 +10,7 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour
 {
     //최대 체력
-    private float _maxHp;
-    public float MaxHp;
+    public float _maxHp;
 
     //현재 체력
     private float _currentHp;
@@ -33,7 +32,6 @@ public abstract class Entity : MonoBehaviour
     //hp Get 함수
     public float GetHp()
     {
-
         return _currentHp;
     }
 

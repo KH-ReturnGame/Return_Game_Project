@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caec19d110d3849a3b25f2b57d515ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHp: 100
 --- !u!114 &239621460788207833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,21 +141,9 @@ MonoBehaviour:
   _movementSpeed: 10
   _jumpForce: 15
   tr: {fileID: 576055015557389213}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  wallCheckDistance: 0.5
   wallSlideSpeed: 2
   isWallJump: 0
   fallImpactParticleSystem: {fileID: 0}
-  platformLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheck: {fileID: 2960787907019829243}
-  checkRadius: 0
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!96 &576055015557389213
 TrailRenderer:
   serializedVersion: 2

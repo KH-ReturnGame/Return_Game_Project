@@ -30,6 +30,11 @@ public class Player : Entity
     //플레이어가 가질 수 있는 모든 상태들 배열
     public State<Player>[] _states;
     public StateManager<Player> _stateManager;
+    
+    //플레이어의 무기 과열관련 변수
+    private static float MaxOverheating = 100f;
+    private float Overheating=100f;
+    private float DecreaseTime = 10;
 
     /// <summary>
     /// Player 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
@@ -54,12 +59,20 @@ public class Player : Entity
         _stateManager = new StateManager<Player>();
         _stateManager.Setup(this,state_count,_states);
     }
-
+    
     //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
     public override void Updated()
     {
         //상태 매니저의 Execute실행
         _stateManager.Execute();
+        
+        Debug.Log(Overheating);
+    }
+
+    public void Start()
+    {
+        //과열 감소 메서드 실행
+        StartCoroutine(DecreaseOverheating());
     }
 
     //상태 추가 메소드
@@ -79,5 +92,17 @@ public class Player : Entity
     public bool IsContainState(PlayerStates ps)
     {
         return _stateManager._currentState.Contains(_states[(int)ps]);
+    }
+    //과열 자동 감소
+    IEnumerator DecreaseOverheating()
+    {
+        if (Overheating > 0 && Overheating <= MaxOverheating)
+        {
+            Overheating--;
+        }
+
+        yield return new WaitForSeconds(DecreaseTime/MaxOverheating);
+
+        StartCoroutine(DecreaseOverheating());
     }
 }

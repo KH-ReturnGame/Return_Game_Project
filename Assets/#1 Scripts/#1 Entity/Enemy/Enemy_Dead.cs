@@ -14,7 +14,7 @@ public class Enemy_Dead : MonoBehaviour
         testEnemy = GetComponent<Enemy>();
         rigid = GetComponent<Rigidbody2D>();
 
-        testEnemy.Setup(testEnemy.MaxHp);
+        testEnemy.Setup(testEnemy._maxHp);
 
     }
 
