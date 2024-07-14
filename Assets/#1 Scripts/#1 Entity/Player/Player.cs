@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 //플레이어가 가질 수 있는 모든 상태 종류
 public enum PlayerStates
@@ -35,6 +36,7 @@ public class Player : Entity
     private static float MaxOverheating = 100f;
     private float Overheating=100f;
     private float DecreaseTime = 10;
+    private Slider OverheatSlider;
 
     /// <summary>
     /// Player 클래스 설정을 위한 Setup메소드, 최대 체력을 매개변수로 받고 base로 부모의 Setup메소드를 호출
@@ -58,6 +60,9 @@ public class Player : Entity
 
         _stateManager = new StateManager<Player>();
         _stateManager.Setup(this,state_count,_states);
+        
+        //슬라이더 가져오기
+        OverheatSlider = transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
     }
     
     //부모의 추상 메소드를 구현, Entity_Manager의 Update에서 반복함
@@ -65,8 +70,6 @@ public class Player : Entity
     {
         //상태 매니저의 Execute실행
         _stateManager.Execute();
-        
-        Debug.Log(Overheating);
     }
 
     public void Start()
@@ -99,6 +102,7 @@ public class Player : Entity
         if (Overheating > 0 && Overheating <= MaxOverheating)
         {
             Overheating--;
+            OverheatSlider.value = Overheating / MaxOverheating;
         }
 
         yield return new WaitForSeconds(DecreaseTime/MaxOverheating);
