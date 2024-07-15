@@ -8,17 +8,21 @@ using System;
 public enum WeaponStates
 {
     CanDecrease,
-    CanIncrease,
+    CanIncreaseContinuous,
+    CanIncreaseDot,
+    CanIncreaseDiscrete,
     IsReloadingRifle,
-    IsShootingRifle
+    IsShootingRifle,
+    IsAttackingKatana,
+    IsShootingRailgun,
 }
 
 public class Weapon_Manager : MonoBehaviour
 {
     //무기 과열관련 변수
     private static float MaxOverheating = 200f;
-    public float Overheating=200f;
-    private float DecreaseTime = 15;
+    public float Overheating=0f;
+    private float DecreaseTime = 5;
     private Slider OverheatSlider;
     
     //무기가 가질 수 있는 모든 상태 개수
@@ -32,9 +36,13 @@ public class Weapon_Manager : MonoBehaviour
         //state 초기화
         _states = new State<Weapon_Manager>[state_count];
         _states[(int)WeaponStates.CanDecrease] = new WeaponOwnedStates.CanDecrease();
-        _states[(int)WeaponStates.CanIncrease] = new WeaponOwnedStates.CanIncrease();
+        _states[(int)WeaponStates.CanIncreaseContinuous] = new WeaponOwnedStates.CanIncreaseContinuous();
+        _states[(int)WeaponStates.CanIncreaseDot] = new WeaponOwnedStates.CanIncreaseDot();
+        _states[(int)WeaponStates.CanIncreaseDiscrete] = new WeaponOwnedStates.CanIncreaseDiscrete();
         _states[(int)WeaponStates.IsReloadingRifle] = new WeaponOwnedStates.IsReloadingRifle();
         _states[(int)WeaponStates.IsShootingRifle] = new WeaponOwnedStates.IsShootingRifle();
+        _states[(int)WeaponStates.IsAttackingKatana] = new WeaponOwnedStates.IsAttackingKatana();
+        _states[(int)WeaponStates.IsShootingRailgun] = new WeaponOwnedStates.IsShootingRailgun();
         
         _stateManager = new StateManager<Weapon_Manager>();
         _stateManager.Setup(this,state_count,_states);
@@ -45,6 +53,7 @@ public class Weapon_Manager : MonoBehaviour
         //과열 감소 시작
         StartCoroutine(DecreaseOverheating());
         AddState(WeaponStates.CanDecrease);
+        AddState(WeaponStates.CanIncreaseDot);
     }
     
     public void Update()
@@ -88,9 +97,9 @@ public class Weapon_Manager : MonoBehaviour
         StartCoroutine(DecreaseOverheating());
     }
     //과열 증가
-    public IEnumerator IncreaseOverheating(float increaseTime)
+    public IEnumerator IncreaseOverheatingContinuous(float increaseTime)
     {
-        yield return new WaitUntil(() => IsContainState(WeaponStates.CanIncrease));
+        yield return new WaitUntil(() => IsContainState(WeaponStates.CanIncreaseContinuous));
         if (Overheating >= 0 && Overheating < MaxOverheating)
         {
             Overheating++;
@@ -99,6 +108,33 @@ public class Weapon_Manager : MonoBehaviour
 
         yield return new WaitForSeconds(increaseTime/MaxOverheating);
 
-        StartCoroutine(IncreaseOverheating(increaseTime));
+        StartCoroutine(IncreaseOverheatingContinuous(increaseTime));
+    }
+    //과열 증가
+    public IEnumerator IncreaseOverheatingDot(float increaseAmount, float coolTime)
+    {
+        if (Overheating >= 0 && Overheating < MaxOverheating)
+        {
+            Overheating+=increaseAmount;
+            if (Overheating > MaxOverheating) Overheating = MaxOverheating;
+            OverheatSlider.value = Overheating / MaxOverheating;
+        }
+
+        yield return new WaitForSeconds(coolTime);
+        AddState(WeaponStates.CanIncreaseDot);
+    }
+    //과열 증가
+    public IEnumerator IncreaseOverheatingDiscrete(float increaseAmount, float increaseTime)
+    {
+        yield return new WaitUntil(() => IsContainState(WeaponStates.CanIncreaseDiscrete));
+        if (Overheating >= 0 && Overheating < MaxOverheating)
+        {
+            Overheating+=increaseAmount;
+            if (Overheating > MaxOverheating) Overheating = MaxOverheating;
+            OverheatSlider.value = Overheating / MaxOverheating;
+        }
+
+        yield return new WaitForSeconds(increaseTime);
+        StartCoroutine(IncreaseOverheatingDiscrete(increaseAmount,increaseTime));
     }
 }
