@@ -8,15 +8,16 @@ public class Rifle : Weapon
     //기본 무기 설정
     private void Start()
     {
-        Setup(30,10);
+        //무기 데미지 30, 0에서 최대 과열정도까지 증가하는데 걸리는 시간 10초
+        Setup(30,5);
     }
 
     private void Update()
     {
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("hi");
             AddState(WeaponStates.IsShootingRifle);
+            IncreaseOverheating();
         }
         else
         {

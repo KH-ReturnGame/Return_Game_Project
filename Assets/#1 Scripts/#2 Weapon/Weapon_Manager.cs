@@ -8,6 +8,7 @@ using System;
 public enum WeaponStates
 {
     CanDecrease,
+    CanIncrease,
     IsReloadingRifle,
     IsShootingRifle
 }
@@ -31,6 +32,7 @@ public class Weapon_Manager : MonoBehaviour
         //state 초기화
         _states = new State<Weapon_Manager>[state_count];
         _states[(int)WeaponStates.CanDecrease] = new WeaponOwnedStates.CanDecrease();
+        _states[(int)WeaponStates.CanIncrease] = new WeaponOwnedStates.CanIncrease();
         _states[(int)WeaponStates.IsReloadingRifle] = new WeaponOwnedStates.IsReloadingRifle();
         _states[(int)WeaponStates.IsShootingRifle] = new WeaponOwnedStates.IsShootingRifle();
         
@@ -42,14 +44,13 @@ public class Weapon_Manager : MonoBehaviour
         
         //과열 감소 시작
         StartCoroutine(DecreaseOverheating());
+        AddState(WeaponStates.CanDecrease);
     }
     
     public void Update()
     {
         //상태 매니저의 Execute실행
         _stateManager.Execute();
-        
-        
     }
     
     //상태 추가 메소드
@@ -87,8 +88,17 @@ public class Weapon_Manager : MonoBehaviour
         StartCoroutine(DecreaseOverheating());
     }
     //과열 증가
-    public void IncreaseOverheating()
+    public IEnumerator IncreaseOverheating(float increaseTime)
     {
-        
+        yield return new WaitUntil(() => IsContainState(WeaponStates.CanIncrease));
+        if (Overheating >= 0 && Overheating < MaxOverheating)
+        {
+            Overheating++;
+            OverheatSlider.value = Overheating / MaxOverheating;
+        }
+
+        yield return new WaitForSeconds(increaseTime/MaxOverheating);
+
+        StartCoroutine(IncreaseOverheating(increaseTime));
     }
 }

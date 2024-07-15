@@ -14,17 +14,15 @@ public class Weapon : MonoBehaviour
     //웨폰 매니저와 연결을 위해 저장
     [SerializeField]
     private Weapon_Manager _weaponManager;
+    
+    //
+    private Coroutine _increaseCoroutine;
 
     public void Setup(float damage, float overheatingTime)
     {
         //기본 변수 설정
         Damage = damage;
         OverheatingTime = overheatingTime;
-    }
-    
-    public void IncreaseOverheating()
-    {
-        
     }
 
     protected void AddState(WeaponStates ps)
@@ -38,5 +36,14 @@ public class Weapon : MonoBehaviour
     protected bool IsContainState(WeaponStates ps)
     {
         return _weaponManager.IsContainState(ps);
+    }
+
+    protected void IncreaseOverheating()
+    {
+        if (_increaseCoroutine == null)
+        {
+            Debug.Log("hi");
+            _increaseCoroutine = StartCoroutine(_weaponManager.IncreaseOverheating(OverheatingTime));
+        }
     }
 }
