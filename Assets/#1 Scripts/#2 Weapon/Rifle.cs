@@ -15,7 +15,12 @@ public class Rifle : Weapon
     {
         if (Input.GetMouseButton(0))
         {
-            IncreaseOverheating();
+            Debug.Log("hi");
+            AddState(WeaponStates.IsShootingRifle);
+        }
+        else
+        {
+            RemoveState(WeaponStates.IsShootingRifle);
         }
     }
 }

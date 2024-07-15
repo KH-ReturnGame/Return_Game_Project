@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 public class StateManager<T> where T : class
 {
     //자식 클래스를 가리킴
-    private T _ownerEntity;
+    private T _owner;
     //현재가지고 있는 모든 상태 리스트
     public List<State<T>> _currentState;
     //가지고 있을 수 있는 상태 개수
@@ -15,7 +15,7 @@ public class StateManager<T> where T : class
     //기본 변수 설정
     public void Setup(T owner, int stateCount, State<T>[] states)
     {
-        _ownerEntity = owner;
+        _owner = owner;
         _states = states;
         _stateCount = stateCount;
         _currentState = new List<State<T>>(_stateCount);
@@ -28,7 +28,7 @@ public class StateManager<T> where T : class
         {
             if (_currentState.Contains(_states[i]))
             {
-                _currentState[_currentState.IndexOf(_states[i])].Execute(_ownerEntity);
+                _currentState[_currentState.IndexOf(_states[i])].Execute(_owner);
             }
         }
     }
@@ -38,14 +38,14 @@ public class StateManager<T> where T : class
     {
         if(_currentState.Contains(newState)) return;
         _currentState.Add(newState);
-        _currentState[_currentState.IndexOf(newState)].Enter(_ownerEntity);
+        _currentState[_currentState.IndexOf(newState)].Enter(_owner);
     }
     
     //상태 제거 메소드
     public void RemoveState(State<T> remState)
     {
         if(!_currentState.Contains(remState)) return;
-        _currentState[_currentState.IndexOf(remState)].Exit(_ownerEntity);
+        _currentState[_currentState.IndexOf(remState)].Exit(_owner);
         _currentState.Remove(remState);
     }
     
